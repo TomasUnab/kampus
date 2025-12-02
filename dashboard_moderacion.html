@@ -1,0 +1,735 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Moderación - KAMPUS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Sistemas KAMPUS -->
+  <script src="js/session-manager.js"></script>
+  <script src="js/cache-manager.js"></script>
+  <script src="js/performance-optimizer.js"></script>
+  <script src="js/notification-system.js"></script>
+  <script src="js/moderation-system.js"></script>
+  <script src="js/kampus-init.js"></script>
+  <script src="js/header-sync.js"></script>
+
+  <style>
+    /* Tailwind @apply doesn't work via CDN; use plain CSS equivalents */
+    .severity-badge {
+      padding: 0.25rem 0.5rem; /* px-2 py-1 */
+      font-size: 0.75rem;      /* text-xs */
+      font-weight: 600;        /* font-semibold */
+      border-radius: 9999px;   /* rounded-full */
+      display: inline-block;
+    }
+    .severity-low { background-color: #dcfce7; color: #166534; }
+    .severity-medium { background-color: #fef9c3; color: #854d0e; }
+    .severity-high { background-color: #ffedd5; color: #9a3412; }
+    .severity-critical { background-color: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">🛡️ Dashboard de Moderación</h1>
+          <p class="text-sm text-gray-500 mt-1">Panel de control para moderadores</p>
+        </div>
+        <button onclick="refreshDashboard()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+          🔄 Actualizar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Tabs -->
+    <div class="bg-white rounded-lg shadow mb-8">
+      <div class="border-b border-gray-200">
+        <nav class="flex -mb-px">
+          <button onclick="switchTab('reports')" id="tab-reports" class="tab-button active px-6 py-3 border-b-2 border-purple-600 text-purple-600 font-medium">
+            📋 Reportes
+          </button>
+          <button onclick="switchTab('queue')" id="tab-queue" class="tab-button px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium">
+            ⏳ Cola de Moderación
+          </button>
+          <button onclick="switchTab('blacklist')" id="tab-blacklist" class="tab-button px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium">
+            🚫 Blacklist
+          </button>
+          <button onclick="switchTab('log')" id="tab-log" class="tab-button px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium">
+            📊 Registro
+          </button>
+        </nav>
+      </div>
+
+      <!-- Contenido de los Tabs -->
+      <div class="p-6">
+        
+        <!-- Tab: Reportes -->
+        <div id="content-reports" class="tab-content">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Reportes Pendientes</h3>
+            <select id="filterReports" onchange="filterReports()" class="px-3 py-2 border border-gray-300 rounded-lg">
+              <option value="all">Todos</option>
+              <option value="pending">Pendientes</option>
+              <option value="reviewing">En Revisión</option>
+              <option value="resolved">Resueltos</option>
+            </select>
+          </div>
+          <div id="reportsList" class="space-y-4">
+            <!-- Se llenarán dinámicamente -->
+          </div>
+        </div>
+
+    <!-- Tab: Cola de Moderación -->
+        <div id="content-queue" class="tab-content hidden">
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Cola de Contenido Pendiente</h3>
+            <p class="text-sm text-gray-500 mt-1">Contenido que requiere revisión manual</p>
+          </div>
+          <div id="queueList" class="space-y-4">
+            <!-- Se llenarán dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Tab: Blacklist -->
+        <div id="content-blacklist" class="tab-content hidden">
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Gestión de Blacklist</h3>
+            <button onclick="showAddBlacklistModal()" class="mt-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+              + Añadir a Blacklist
+            </button>
+          </div>
+          
+          <!-- Usuarios Bloqueados -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-2">👤 Usuarios bloqueados</h4>
+            <div id="blacklistUsers" class="space-y-2">
+              <!-- Se llenarán dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Emails Bloqueados -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-2">📧 Emails Bloqueados</h4>
+            <div id="blacklistEmails" class="space-y-2">
+              <!-- Se llenarán dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Keywords Bloqueadas -->
+          <div>
+            <h4 class="font-medium text-gray-700 mb-2">🔤 Palabras Prohibidas</h4>
+            <div id="blacklistKeywords" class="space-y-2">
+              <!-- Se llenarán dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Registro -->
+        <div id="content-log" class="tab-content hidden">
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Registro de Acciones</h3>
+            <select id="filterLog" onchange="filterLog()" class="mt-2 px-3 py-2 border border-gray-300 rounded-lg">
+              <option value="all">Todas las acciones</option>
+              <option value="report_created">Reportes Creados</option>
+              <option value="report_updated">Reportes Actualizados</option>
+              <option value="queue_processed">Cola Procesada</option>
+              <option value="blacklist_add">Añadido a Blacklist</option>
+              
+            </select>
+          </div>
+          <div id="logList" class="space-y-2 max-h-96 overflow-y-auto">
+            <!-- Se llenarán dinámicamente -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal para añadir a blacklist -->
+  <div id="blacklistModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+      <div class="p-6">
+  <h3 class="text-lg font-bold text-gray-900 mb-4">Añadir a Blacklist</h3>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+            <select id="blacklistType" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+              <option value="users">Usuario</option>
+              <option value="emails">Email</option>
+              <option value="keywords">Palabra Prohibida</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Valor</label>
+            <input type="text" id="blacklistValue" placeholder="ID, email o palabra" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Razón</label>
+            <textarea id="blacklistReason" placeholder="Motivo del bloqueo" class="w-full px-3 py-2 border border-gray-300 rounded-lg" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-6">
+          <button onclick="closeBlacklistModal()" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button onclick="addToBlacklist()" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+            Bloquear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // INICIALIZACIÓN
+    // ==========================================
+
+    let currentTab = 'reports';
+
+    window.addEventListener('load', () => {
+      // Verificar permisos de moderador o admin
+      if (!Kampus.isLoggedIn()) {
+        alert('Debes iniciar sesión');
+        window.location.href = 'login_/_registro/code.html';
+        return;
+      }
+
+      const user = Kampus.getCurrentUser();
+      if (!Kampus.isModerator() && !Kampus.isAdmin()) {
+        Kampus.notify('⛔ No tienes permisos de moderador', 'error');
+        setTimeout(() => {
+          window.location.href = 'dashboard_principal/code.html';
+        }, 2000);
+        return;
+      }
+
+      // Mostrar badge de rol
+      showUserRole();
+      
+      // Mostrar tabs adicionales si es admin
+      if (Kampus.isAdmin()) {
+        showAdminFeatures();
+      }
+
+      refreshDashboard();
+    });
+
+    function showUserRole() {
+      const user = Kampus.getCurrentUser();
+      const badge = Kampus.getRoleBadge();
+      
+      const roleHTML = `
+        <div class="flex items-center gap-2">
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-900">${user.name}</p>
+            <p class="text-xs text-gray-500">${user.email}</p>
+          </div>
+          <span class="px-3 py-1 ${badge.color} rounded-full text-xs font-bold flex items-center gap-1">
+            ${badge.icon} ${badge.text}
+          </span>
+        </div>
+      `;
+      
+      const header = document.querySelector('header .flex.justify-between');
+      const userDiv = document.createElement('div');
+      userDiv.innerHTML = roleHTML;
+      header.insertBefore(userDiv, header.lastElementChild);
+    }
+
+    function showAdminFeatures() {
+      // Agregar tab de gestión de usuarios (solo para admins)
+      const nav = document.querySelector('nav.flex.-mb-px');
+      const adminTab = document.createElement('button');
+      adminTab.onclick = () => switchTab('users');
+      adminTab.id = 'tab-users';
+      adminTab.className = 'tab-button px-6 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium';
+      adminTab.innerHTML = '👥 Usuarios';
+      nav.appendChild(adminTab);
+
+      // Agregar contenido del tab de usuarios
+      const tabsContainer = document.querySelector('.p-6');
+      const usersTab = document.createElement('div');
+      usersTab.id = 'content-users';
+      usersTab.className = 'tab-content hidden';
+      usersTab.innerHTML = `
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-gray-900">Gestión de Usuarios</h3>
+          <p class="text-sm text-gray-500 mt-1">Solo administradores pueden ver esta sección</p>
+        </div>
+        <div id="usersList" class="space-y-4">
+          <!-- Se llenará dinámicamente -->
+        </div>
+      `;
+      tabsContainer.appendChild(usersTab);
+
+      console.log('🔴 Funciones de ADMIN habilitadas');
+    }
+
+    // ==========================================
+  // GESTIÓN DE TABS
+    // ==========================================
+
+    function switchTab(tab) {
+      currentTab = tab;
+      
+      // Ocultar todos los contenidos
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-button').forEach(el => {
+        el.classList.remove('active', 'border-purple-600', 'text-purple-600');
+        el.classList.add('border-transparent', 'text-gray-500');
+      });
+
+      // Mostrar el seleccionado
+      document.getElementById('content-' + tab).classList.remove('hidden');
+      const button = document.getElementById('tab-' + tab);
+      button.classList.add('active', 'border-purple-600', 'text-purple-600');
+      button.classList.remove('border-transparent', 'text-gray-500');
+
+      // Cargar datos
+      loadTabData(tab);
+    }
+
+    function loadTabData(tab) {
+      switch(tab) {
+        case 'reports':
+          loadReports();
+          break;
+        case 'queue':
+          loadQueue();
+          break;
+        case 'blacklist':
+          loadBlacklist();
+          break;
+        case 'log':
+          loadLog();
+          break;
+        case 'users':
+          if (Kampus.isAdmin()) {
+            loadUsers();
+          }
+          break;
+      }
+    }
+
+    // ==========================================
+  // ACTUALIZAR DASHBOARD
+    // ==========================================
+
+    function refreshDashboard() {
+      updateStats();
+      loadTabData(currentTab);
+      Kampus.notify('Dashboard actualizado', 'success');
+    }
+
+    function updateStats() {
+      // Stats cards removed; keep function for compatibility (no-op or potential future UI)
+      const stats = window.ModerationSystem.getStats?.();
+      if (!stats) return;
+    }
+
+    // ==========================================
+    // REPORTES
+    // ==========================================
+
+    function loadReports() {
+      const filter = document.getElementById('filterReports')?.value || 'all';
+      const filters = filter === 'all' ? {} : { status: filter };
+      const reports = window.ModerationSystem.getReports(filters);
+      
+      const container = document.getElementById('reportsList');
+      
+      if (reports.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-8">No hay reportes</p>';
+        return;
+      }
+
+      container.innerHTML = reports.map(report => `
+        <div class="border border-gray-200 rounded-lg p-4">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="severity-badge severity-${report.severity}">${report.severity.toUpperCase()}</span>
+                <span class="text-sm text-gray-500">${formatDate(report.reportedAt)}</span>
+              </div>
+              <p class="font-medium text-gray-900">${report.itemType}: ${report.itemId}</p>
+              <p class="text-sm text-gray-600 mt-1">Razón: ${report.reason}</p>
+              ${report.description ? `<p class="text-sm text-gray-500 mt-1">${report.description}</p>` : ''}
+            </div>
+            <div class="flex gap-2">
+              <button onclick="resolveReport('${report.id}')" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                ✔ Resolver
+              </button>
+              <button onclick="dismissReport('${report.id}')" class="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700">
+                ✖ Descartar
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterReports() {
+      loadReports();
+    }
+
+    function resolveReport(reportId) {
+  const resolution = prompt('Acción tomada:');
+      if (!resolution) return;
+
+      window.ModerationSystem.updateReportStatus(reportId, 'resolved', resolution);
+      Kampus.notify('Reporte resuelto', 'success');
+      refreshDashboard();
+    }
+
+    function dismissReport(reportId) {
+      if (!confirm('¿Descartar este reporte?')) return;
+
+      window.ModerationSystem.updateReportStatus(reportId, 'dismissed', 'Descartado por moderador');
+      Kampus.notify('Reporte descartado', 'info');
+      refreshDashboard();
+    }
+
+    // ==========================================
+  // COLA DE MODERACIÓN
+    // ==========================================
+
+    function loadQueue() {
+      const queue = window.ModerationSystem.getModerationQueue('pending');
+      const container = document.getElementById('queueList');
+      
+      if (queue.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-8">La cola está vacía</p>';
+        return;
+      }
+
+      container.innerHTML = queue.map(item => `
+        <div class="border border-gray-200 rounded-lg p-4">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <p class="font-medium text-gray-900">${item.itemType}: ${item.itemId}</p>
+              <p class="text-sm text-gray-600 mt-1">${item.text}</p>
+              <div class="flex gap-2 mt-2">
+                ${item.analysis.issues.map(issue => `
+                  <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">${issue}</span>
+                `).join('')}
+              </div>
+              <p class="text-xs text-gray-500 mt-2">Score: ${item.analysis.score}</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="approveQueueItem('${item.id}')" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                ✔ Aprobar
+              </button>
+              <button onclick="rejectQueueItem('${item.id}')" class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                ✖ Rechazar
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function approveQueueItem(itemId) {
+      window.ModerationSystem.processQueueItem(itemId, 'approved', 'Aprobado manualmente');
+      Kampus.notify('Contenido aprobado', 'success');
+      refreshDashboard();
+    }
+
+    function rejectQueueItem(itemId) {
+      const reason = prompt('Motivo del rechazo:');
+      if (!reason) return;
+
+      window.ModerationSystem.processQueueItem(itemId, 'rejected', reason);
+      Kampus.notify('Contenido rechazado', 'success');
+      refreshDashboard();
+    }
+
+    // ==========================================
+    // BLACKLIST
+    // ==========================================
+
+    function loadBlacklist() {
+      const blacklist = window.ModerationSystem.blacklist;
+      
+      // Usuarios
+      const usersContainer = document.getElementById('blacklistUsers');
+      usersContainer.innerHTML = blacklist.users.length > 0 
+        ? blacklist.users.map(item => createBlacklistItem('users', item)).join('')
+        : '<p class="text-sm text-gray-500">Sin Usuarios Bloqueados</p>';
+
+      // Emails
+      const emailsContainer = document.getElementById('blacklistEmails');
+      emailsContainer.innerHTML = blacklist.emails.length > 0
+        ? blacklist.emails.map(item => createBlacklistItem('emails', item)).join('')
+        : '<p class="text-sm text-gray-500">Sin emails bloqueados</p>';
+
+      // Keywords
+      const keywordsContainer = document.getElementById('blacklistKeywords');
+      keywordsContainer.innerHTML = blacklist.keywords.length > 0
+        ? blacklist.keywords.map(item => createBlacklistItem('keywords', item)).join('')
+        : '<p class="text-sm text-gray-500">Sin palabras prohibidas</p>';
+    }
+
+    function createBlacklistItem(type, item) {
+      return `
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div>
+            <p class="font-medium text-gray-900">${item.value}</p>
+            <p class="text-sm text-gray-500">${item.reason || 'Sin razón'}</p>
+            <p class="text-xs text-gray-400">${formatDate(item.addedAt)}</p>
+          </div>
+          <button onclick="removeFromBlacklist('${type}', '${item.value}')" class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+            Desbloquear
+          </button>
+        </div>
+      `;
+    }
+
+    function showAddBlacklistModal() {
+      document.getElementById('blacklistModal').classList.remove('hidden');
+    }
+
+    function closeBlacklistModal() {
+      document.getElementById('blacklistModal').classList.add('hidden');
+      document.getElementById('blacklistValue').value = '';
+      document.getElementById('blacklistReason').value = '';
+    }
+
+    function addToBlacklist() {
+      const type = document.getElementById('blacklistType').value;
+      const value = document.getElementById('blacklistValue').value.trim();
+      const reason = document.getElementById('blacklistReason').value.trim();
+
+      if (!value) {
+        alert('Ingresa un valor');
+        return;
+      }
+
+      window.ModerationSystem.addToBlacklist(type, value, reason);
+      Kampus.notify('Añadido a blacklist', 'success');
+      closeBlacklistModal();
+      refreshDashboard();
+    }
+
+    function removeFromBlacklist(type, value) {
+      if (!confirm(`¿Desbloquear ${value}?`)) return;
+
+      window.ModerationSystem.removeFromBlacklist(type, value);
+      Kampus.notify('Eliminado de blacklist', 'success');
+      refreshDashboard();
+    }
+
+    // ==========================================
+    // REGISTRO
+    // ==========================================
+
+    function loadLog() {
+      const filter = document.getElementById('filterLog')?.value || 'all';
+      const filters = filter === 'all' ? {} : { action: filter };
+      const log = window.ModerationSystem.getModerationLog(filters);
+      
+      const container = document.getElementById('logList');
+      
+      if (log.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-8">No hay registros</p>';
+        return;
+      }
+
+      container.innerHTML = log.reverse().map(entry => `
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div>
+            <p class="text-sm font-medium text-gray-900">${entry.action}</p>
+            <p class="text-xs text-gray-500 mt-1">${JSON.stringify(entry.data).substring(0, 100)}...</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-gray-500">${formatDate(entry.timestamp)}</p>
+            <p class="text-xs text-gray-400">${entry.moderator}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterLog() {
+      loadLog();
+    }
+
+    // ==========================================
+  // GESTIÓN DE USUARIOS (SOLO ADMIN)
+    // ==========================================
+
+    function loadUsers() {
+      if (!Kampus.isAdmin()) {
+        Kampus.notify('🔒 Solo administradores pueden ver esto', 'error');
+        return;
+      }
+
+      const users = window.SessionManager.getAllUsers();
+      const container = document.getElementById('usersList');
+      
+      if (users.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-8">No hay usuarios</p>';
+        return;
+      }
+      // Tabla de usuarios
+      container.innerHTML = `
+        <div class="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
+          <table class="min-w-full text-sm">
+            <thead class="bg-gray-50 text-xs uppercase text-gray-600">
+              <tr>
+                <th class="px-4 py-3 text-left">Avatar</th>
+                <th class="px-4 py-3 text-left">Nombre</th>
+                <th class="px-4 py-3 text-left">Email</th>
+                <th class="px-4 py-3 text-left">Rol</th>
+                <th class="px-4 py-3 text-left">Premium</th>
+                <th class="px-4 py-3 text-left">Carrera</th>
+                <th class="px-4 py-3 text-left">Universidad</th>
+                <th class="px-4 py-3 text-left">Registro</th>
+                <th class="px-4 py-3 text-left">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              ${users.map(u => {
+                const reg = new Date(u.registeredAt).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+                const roleBadge = u.role === 'admin'
+                  ? '<span class="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-semibold">Admin</span>'
+                  : u.role === 'moderator'
+                    ? '<span class="px-2 py-0.5 rounded bg-yellow-100 text-yellow-700 text-xs font-semibold">Mod</span>'
+                    : '<span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-xs font-semibold">User</span>';
+                const premiumChip = u.isPremium ? '<span class="px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-xs font-semibold">Sí</span>' : '<span class="px-2 py-0.5 rounded bg-gray-100 text-gray-500 text-xs">No</span>';
+                const actions = u.role === 'admin' ? '<span class="text-xs text-red-600 font-medium">Protegido</span>' : `
+                  <div class="flex items-center gap-2">
+                    <button onclick="editUser('${u.id}')" class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs">Editar</button>
+                    ${!u.isPremium ? `<button onclick="makePremium('${u.id}')" class="px-2 py-1 bg-purple-500 hover:bg-purple-600 text-white rounded text-xs">Premium</button>` : ''}
+                    <button onclick="banUser('${u.id}')" class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs">Banear</button>
+                  </div>`;
+                return `
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2"><img src="${u.avatar}" alt="${u.name}" class="w-10 h-10 rounded-full object-cover border"></td>
+                    <td class="px-4 py-2 font-medium text-gray-900 max-w-[140px] truncate" title="${u.name}">${u.name}</td>
+                    <td class="px-4 py-2 text-gray-600 max-w-[180px] truncate" title="${u.email}">${u.email}</td>
+                    <td class="px-4 py-2">${roleBadge}</td>
+                    <td class="px-4 py-2">${premiumChip}</td>
+                    <td class="px-4 py-2 text-gray-600 max-w-[140px] truncate" title="${u.career}">${u.career || '-'}</td>
+                    <td class="px-4 py-2 text-gray-600 max-w-[140px] truncate" title="${u.university}">${u.university || '-'}</td>
+                    <td class="px-4 py-2 text-gray-600 whitespace-nowrap">${reg}</td>
+                    <td class="px-4 py-2">${actions}</td>
+                  </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+
+    function editUser(userId) {
+      if (!Kampus.isAdmin()) {
+        Kampus.notify('🔒 Solo administradores pueden editar usuarios', 'error');
+        return;
+      }
+
+      const users = window.SessionManager.getAllUsers();
+      const user = users.find(u => u.id === userId);
+      
+      if (!user) {
+        Kampus.notify('❌ Usuario no encontrado', 'error');
+        return;
+      }
+
+  // Modal de edición más completo
+      const currentRole = user.role;
+      const newRole = prompt(`Cambiar rol de ${user.name}\n\nRol actual: ${currentRole}\n\nNuevo rol (user/moderator/admin):`);
+      
+      if (!newRole) return;
+      
+      if (!['user', 'moderator', 'admin'].includes(newRole)) {
+        Kampus.notify('❌ Rol inválido. Usa: user, moderator o admin', 'error');
+        return;
+      }
+
+      const result = window.SessionManager.promoteUser(userId, newRole);
+      
+      if (result.success) {
+        Kampus.notify(`✅ ${user.name} ahora es ${newRole}`, 'success');
+        refreshDashboard();
+      } else {
+        Kampus.notify(`❌ ${result.error}`, 'error');
+      }
+    }
+
+    function makePremium(userId) {
+      if (!Kampus.isAdmin()) {
+        Kampus.notify('🔒 Solo administradores pueden activar premium', 'error');
+        return;
+      }
+
+      const users = window.SessionManager.getAllUsers();
+      const userIndex = users.findIndex(u => u.id === userId);
+      
+      if (userIndex === -1) {
+        Kampus.notify('❌ Usuario no encontrado', 'error');
+        return;
+      }
+
+      users[userIndex].isPremium = true;
+      window.SessionManager.saveUsers(users);
+      
+      Kampus.notify('✅ Usuario actualizado a Premium', 'success');
+      refreshDashboard();
+    }
+
+    function banUser(userId) {
+      if (!Kampus.isAdmin()) {
+        Kampus.notify('🔒 Solo administradores pueden banear usuarios', 'error');
+        return;
+      }
+
+      const reason = prompt('Motivo del baneo:');
+      if (!reason) return;
+
+      window.ModerationSystem.addToBlacklist('users', userId, reason);
+      
+      Kampus.notify('✅ Usuario baneado', 'success');
+      refreshDashboard();
+    }
+
+    // ==========================================
+    // UTILIDADES
+    // ==========================================
+
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const diff = now - date;
+      
+      if (diff < 60000) return 'Hace un momento';
+      if (diff < 3600000) return `Hace ${Math.floor(diff / 60000)} min`;
+      if (diff < 86400000) return `Hace ${Math.floor(diff / 3600000)}h`;
+      
+      return date.toLocaleDateString('es-ES', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+

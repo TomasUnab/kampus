@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>Kampus - Resultados de Búsqueda</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="stylesheet" href="../fix-mobile.css">
+<link rel="stylesheet" href="../css/mobile-fixes.css">
+<link rel="stylesheet" href="../css/mobile-layout-fixes.css">
+<script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#13a4ec',
+              'background-light': '#f6f7f8',
+              'background-dark': '#101c22',
+            },
+            fontFamily: {
+              display: ['Plus Jakarta Sans'],
+            },
+            borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-10 w-full border-b border-gray-200/80 bg-background-light/80 px-4 sm:px-10 py-3 backdrop-blur-sm dark:border-gray-700/80 dark:bg-background-dark/80">
+<div class="mx-auto flex max-w-7xl items-center justify-between gap-4 sm:gap-12">
+<div class="flex items-center gap-3 text-primary">
+<svg class="h-8 w-8" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+<h1 class="font-display text-2xl font-bold text-gray-900 dark:text-white">Kampus</h1>
+</div>
+<!-- Botón menú móvil -->
+<button class="md:hidden p-2 text-gray-600 dark:text-gray-300" onclick="toggleMobileMenu()">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="../dashboard_principal/code.html">Inicio</a>
+<a class="text-sm font-medium text-primary" href="code.html">Explorar</a>
+<a class="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="../mis_materiales/code.html">Mis materiales</a>
+<a class="text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary" href="../planes/code.html">Planes</a>
+</nav>
+
+<!-- Menú móvil -->
+<div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-700 md:hidden z-50 shadow-lg">
+<div class="px-4 py-4 space-y-2">
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../dashboard_principal/code.html">🏠 Inicio</a>
+<a class="block px-4 py-3 text-primary bg-primary/10 rounded-lg" href="code.html">🔍 Explorar</a>
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../mis_materiales/code.html">📚 Mis materiales</a>
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../planes/code.html">💎 Planes</a>
+</div>
+</div>
+
+<div class="hidden md:flex items-center gap-4">
+<div class="relative">
+<button class="notification-button flex h-10 w-10 items-center justify-center rounded-full bg-gray-200/50 text-gray-600 hover:bg-primary/20 hover:text-primary dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-primary/20 dark:hover:text-primary">
+<span class="material-symbols-outlined"> notifications </span>
+</button>
+<div class="notification-dropdown hidden absolute right-0 top-12 w-80 bg-white dark:bg-background-dark rounded-lg shadow-xl border border-black/10 dark:border-white/10 overflow-hidden z-50">
+<div class="px-4 py-3 border-b border-black/10 dark:border-white/10">
+<h3 class="text-sm font-semibold text-black dark:text-white">Notificaciones</h3>
+</div>
+<div class="max-h-96 overflow-y-auto">
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">★</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nueva valoración</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Juan Pérez calificó tu material "Apuntes de Cálculo II" con 5 estrellas</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">💬</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo comentario</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">María González comentó en "Guía de ejercicios de Física I"</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 5 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">📥</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Material descargado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Tu material "Resumen de Historia" fue descargado 10 veces hoy</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 1 día</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">🏆</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo logro desbloqueado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Has alcanzado 100 puntos de reputación</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 días</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t border-black/10 dark:border-white/10 text-center">
+<a href="#" class="text-xs text-primary hover:text-primary/80 font-medium">Ver todas las notificaciones</a>
+</div>
+</div>
+</div>
+<div data-header-avatar class="h-10 w-10 rounded-full bg-cover bg-center cursor-pointer" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+</div>
+</div>
+</header>
+<main class="w-full grow">
+<div class="mx-auto max-w-4xl px-4 py-4 sm:px-6 lg:px-8 sm:py-8">
+<div class="mb-8">
+<div class="relative">
+<span class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"> search </span>
+<input id="search-input" class="w-full rounded-lg border-2 border-transparent bg-white py-3 pl-12 pr-10 text-base text-gray-900 shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:bg-background-dark dark:text-white dark:focus:border-primary" value="Apuntes de Cálculo"/>
+<button id="clear-search" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined"> close </span>
+</button>
+</div>
+</div>
+            <div class="border-b border-gray-200 dark:border-gray-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8 px-4">
+<a class="tab-btn border-primary text-primary whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium cursor-pointer" data-tab="todo">
+                Todo
+              </a>
+<a class="tab-btn border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium dark:text-gray-400 dark:hover:border-gray-500 dark:hover:text-gray-300 cursor-pointer" data-tab="documentos"> Documentos </a>
+</nav>
+</div>
+<div class="mt-6 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center justify-between gap-4 px-4">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Resultados de la búsqueda</h2>
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+<span class="text-sm font-medium text-gray-600 dark:text-gray-400">Ordenar por:</span>
+<div class="flex gap-2 flex-wrap">
+<button id="sort-relevancia" class="sort-btn rounded-lg bg-primary/20 px-3 py-1.5 text-sm font-semibold text-primary">Relevancia</button>
+<button id="sort-calificacion" class="sort-btn rounded-lg bg-transparent px-3 py-1.5 text-sm font-medium text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700/50">
+                  Calificación
+                </button>
+</div>
+</div>
+</div>
+            <div class="mt-6 space-y-4" id="resultados-container">
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="pdf" data-rating="4.5">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXhwwDNQ_ZQpjt9nFPXLyyikA35nGtckDDIOVXbTMgcBjXAf6Gfianf-gFpNdL3olKgoWKDvqN0ww0FtKQ7UIsZUX0MECDEwqEQARdPqpOHegbrHEuiej9ImWmJd8QHU7Olptu8RLkA9K9TBOY7dnmxq2PuohgF5oVFbk43wWqBiccZlCJj11R8f52Ya6SNRyW7eeVWUXS0zDoccfUznhdYrEtlPvvugOW0xYPWp5-xtPqPNY51RYLCSTUAmDSCSOdRJd0GcvmEYI");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Apuntes de Cálculo I <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded dark:bg-red-900/30 dark:text-red-400">PDF</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Apuntes completos de Cálculo I, incluyendo derivadas, integrales y límites. Ideal para estudiantes de primer año.
+                </p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.5</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>120</span>
+</div>
+<span>Subido: 15 de mayo de 2024</span>
+<span>Autor: Anónimo</span>
+</div>
+</div>
+</div>
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="docx" data-rating="4.2">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCbaHVqScMJ-mb3IgdLWsxS7stwg0ltbqyUt_zNMTrGh04CofhDFGz871oSSN801fxT5wwieuPZwWNpfeuIrIE-snSRijS1tzk8HZeQpZLN0ZoOoal4-iXZUDMuYkrKIz1b74LwUpFgI9meI8nrGYBqNlZRYO142EORyTW9JQmAPe-FIfa6vQih_Nl9xjsHzFUIxSPk5q7QJJzEzqtg-DDu_JGj4Z421El6QVCtcgpwq-DdLFEHiOYdzUvjXDY4M2KDkKk7agi9Kfo");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Resumen de Cálculo II <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded dark:bg-blue-900/30 dark:text-blue-400">DOCX</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Resumen de los temas clave de Cálculo II, con ejemplos prácticos y ejercicios resueltos.</p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.2</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>95</span>
+</div>
+<span>Subido: 20 de mayo de 2024</span>
+<span>Autor: Sofía R.</span>
+</div>
+</div>
+</div>
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="pdf" data-rating="4.8">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwuwHh7xjofqYXqJwC2hyWed_1WmFNnFTEwUpHybk8PTwxzBABoyrTuYyoF7PC0wj3AKCiPsffO21upJEAhdQT8dfJ5lo6hMJvNgViFDx_nm8BeQDetSH4lTkxY6dNdxQq1oIfu1OJGGKtIa8ia_faxw7_SOxBvMrRwM42YWAkw4caoP03gKRalkgbPwu-g7BohsuDAnhPSrVZjxeAWOw9Fb3nm0ovS9eXbxsX2kJpqxPlcl61UTcHGvh8TLqN-OQDJuXeKYhZSCM");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Guía de Problemas de Cálculo III <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded dark:bg-red-900/30 dark:text-red-400">PDF</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Guía completa para resolver problemas de Cálculo III, con explicaciones detalladas y soluciones paso a paso.
+                </p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.8</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>150</span>
+</div>
+<span>Subido: 10 de mayo de 2024</span>
+<span>Autor: Anónimo</span>
+</div>
+</div>
+</div>
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="xlsx" data-rating="4.0">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCs6jUwXrLsKJr37RvEW64WOzWILfoyBNn9TEOZlqWrw8ByAwQfeKyByIplnh-6_psmquXPPkLzdT92FMC3HWu0Z2ug78KLyprISuP3M_M6bzM4_vAwsGlqyZuY5tT5CMFz2Awb0rupNAVpJogpI4Uq38hfkxF3qmgoX9KGG4dS-jPAxAqSRMQ_5EiTTxl0L8plT-z4H6w7V288CTeF4-ZaKc41iNvuChhcNFR3PC_KH1f9JKowTfwriwOI9s6rLvK0lYd_7_iaQ1w");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Apuntes de Cálculo IV <span class="ml-2 text-xs bg-green-100 text-green-600 px-2 py-1 rounded dark:bg-green-900/30 dark:text-green-400">XLSX</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Apuntes de Cálculo IV, enfocados en ecuaciones diferenciales y series. Incluye ejemplos y ejercicios.</p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.0</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>80</span>
+</div>
+<span>Subido: 25 de mayo de 2024</span>
+<span>Autor: Diego M.</span>
+</div>
+</div>
+</div>
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="pptx" data-rating="4.6">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdUxde8VCmy5X6csmm0zB0yyIdI2QITeyMLkjP7ZaIoAGezVeQ56iO_VDrrAaBohJYW4BwPotdh-lP7PfWV3LirluRmpFBmM0c24Vkz7Un37ztJFafE_eFJYc_ZJPwJ95eDLxGo42iWf5dsRWkBqpy1lLIllduiJXtcWF9jECFACAZrlC49_bSo3LdGOj1WwOs3jpMpHpNOEfM0IezmqSs7bpMm6GkfrAr4Qhblx5KktW3KpbJwrsAFmJLlxp9cuMrJdY02ZyIwgQ");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Material de Cálculo Vectorial <span class="ml-2 text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded dark:bg-orange-900/30 dark:text-orange-400">PPTX</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Material de estudio para Cálculo Vectorial, con definiciones, teoremas y ejemplos aplicados.</p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.6</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>110</span>
+</div>
+<span>Subido: 12 de mayo de 2024</span>
+<span>Autor: Anónimo</span>
+</div>
+</div>
+</div>
+
+<!-- Elemento NO documento (video) -->
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="video" data-rating="4.9">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCs6jUwXrLsKJr37RvEW64WOzWILfoyBNn9TEOZlqWrw8ByAwQfeKyByIplnh-6_psmquXPPkLzdT92FMC3HWu0Z2ug78KLyprISuP3M_M6bzM4_vAwsGlqyZuY5tT5CMFz2Awb0rupNAVpJogpI4Uq38hfkxF3qmgoX9KGG4dS-jPAxAqSRMQ_5EiTTxl0L8plT-z4H6w7V288CTeF4-ZaKc41iNvuChhcNFR3PC_KH1f9JKowTfwriwOI9s6rLvK0lYd_7_iaQ1w");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Video Tutorial de Límites <span class="ml-2 text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded dark:bg-purple-900/30 dark:text-purple-400">VIDEO</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Video explicativo sobre límites en cálculo, con ejemplos prácticos y ejercicios resueltos.</p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.9</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>250</span>
+</div>
+<span>Subido: 5 de junio de 2024</span>
+<span>Autor: Profesor Martínez</span>
+</div>
+</div>
+</div>
+
+<!-- Otro elemento NO documento (imagen) -->
+<div class="resultado-item flex transform cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:bg-background-dark" data-type="imagen" data-rating="4.3">
+<div class="h-28 w-28 flex-shrink-0 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwuwHh7xjofqYXqJwC2hyWed_1WmFNnFTEwUpHybk8PTwxzBABoyrTuYyoF7PC0wj3AKCiPsffO21upJEAhdQT8dfJ5lo6hMJvNgViFDx_nm8BeQDetSH4lTkxY6dNdxQq1oIfu1OJGGKtIa8ia_faxw7_SOxBvMrRwM42YWAkw4caoP03gKRalkgbPwu-g7BohsuDAnhPSrVZjxeAWOw9Fb3nm0ovS9eXbxsX2kJpqxPlcl61UTcHGvh8TLqN-OQDJuXeKYhZSCM");'></div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Infografía de Derivadas <span class="ml-2 text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded dark:bg-pink-900/30 dark:text-pink-400">IMAGEN</span></h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Infografía visual con las reglas principales de derivación y ejemplos ilustrados.</p>
+<div class="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-yellow-500"> star </span>
+<span class="font-medium">4.3</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base"> visibility </span>
+<span>180</span>
+</div>
+<span>Subido: 8 de junio de 2024</span>
+<span>Autor: Ana L.</span>
+</div>
+</div>
+</div>
+</div>
+<div id="no-results" class="hidden mt-6 text-center py-12">
+<p class="text-lg text-gray-600 dark:text-gray-400">No se encontraron resultados para este filtro</p>
+<button onclick="document.querySelector('[data-tab=\'todo\']').click()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                Ver todos los resultados
+              </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Sistema de pestañas con filtrado
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const resultadosItems = document.querySelectorAll('.resultado-item');
+    const noResultsMessage = document.getElementById('no-results');
+    const resultadosContainer = document.getElementById('resultados-container');
+    const sortButtons = document.querySelectorAll('.sort-btn');
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.getElementById('clear-search');
+    let currentTab = 'todo';
+    let currentSort = 'relevancia';
+    let searchQuery = '';
+
+    // Tipos de documentos válidos
+    const documentTypes = ['pdf', 'docx', 'xlsx', 'pptx', 'doc', 'xls', 'ppt', 'txt'];
+
+    // Guardar orden original
+    const originalOrder = Array.from(resultadosItems);
+
+    function filterResults(filter) {
+        let visibleCount = 0;
+        
+        resultadosItems.forEach(item => {
+            const itemType = item.getAttribute('data-type');
+            const itemTitle = item.querySelector('h3').textContent.toLowerCase();
+            const itemDescription = item.querySelector('p').textContent.toLowerCase();
+            const searchLower = searchQuery.toLowerCase();
+            
+            // Verificar si coincide con la búsqueda
+            const matchesSearch = searchQuery === '' || 
+                                 itemTitle.includes(searchLower) || 
+                                 itemDescription.includes(searchLower);
+            
+            // Verificar si coincide con el filtro de tipo
+            let matchesFilter = false;
+            if (filter === 'todo') {
+                matchesFilter = true;
+            } else if (filter === 'documentos') {
+                matchesFilter = documentTypes.includes(itemType);
+            }
+            
+            // Mostrar solo si cumple ambas condiciones
+            if (matchesSearch && matchesFilter) {
+                item.style.display = '';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Mostrar/ocultar mensaje de sin resultados
+        if (visibleCount === 0) {
+            noResultsMessage.classList.remove('hidden');
+        } else {
+            noResultsMessage.classList.add('hidden');
+        }
+
+        return visibleCount;
+    }
+
+    function sortResults(sortType) {
+        const itemsArray = Array.from(resultadosItems);
+        
+        if (sortType === 'calificacion') {
+            // Ordenar por calificación (mayor a menor)
+            itemsArray.sort((a, b) => {
+                const ratingA = parseFloat(a.getAttribute('data-rating')) || 0;
+                const ratingB = parseFloat(b.getAttribute('data-rating')) || 0;
+                return ratingB - ratingA; // Mayor a menor
+            });
+        } else {
+            // Orden original (relevancia)
+            itemsArray.sort((a, b) => {
+                return originalOrder.indexOf(a) - originalOrder.indexOf(b);
+            });
+        }
+        
+        // Reordenar elementos en el DOM
+        itemsArray.forEach(item => {
+            resultadosContainer.appendChild(item);
+        });
+        
+        // Aplicar filtro actual después de reordenar
+        filterResults(currentTab);
+    }
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedTab = this.getAttribute('data-tab');
+            
+            // Actualizar estilos de pestañas
+            tabButtons.forEach(btn => {
+                btn.classList.remove('border-primary', 'text-primary');
+                btn.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            });
+            
+            this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            this.classList.add('border-primary', 'text-primary');
+            
+            currentTab = selectedTab;
+            
+            // Aplicar filtro
+            filterResults(selectedTab);
+        });
+    });
+
+    // Sistema de búsqueda en tiempo real
+    searchInput.addEventListener('input', function(e) {
+        searchQuery = this.value;
+        filterResults(currentTab);
+    });
+
+    // Botón limpiar búsqueda
+    clearSearchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        searchInput.value = '';
+        searchQuery = '';
+        filterResults(currentTab);
+        searchInput.focus();
+    });
+
+    // Sistema de ordenamiento
+    sortButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sortType = this.id.replace('sort-', '');
+            
+            // Actualizar estilos de botones de ordenamiento
+            sortButtons.forEach(btn => {
+                btn.classList.remove('bg-primary/20', 'font-semibold', 'text-primary');
+                btn.classList.add('bg-transparent', 'font-medium', 'text-gray-500', 'dark:text-gray-400');
+            });
+            
+            this.classList.remove('bg-transparent', 'font-medium', 'text-gray-500', 'dark:text-gray-400');
+            this.classList.add('bg-primary/20', 'font-semibold', 'text-primary');
+            
+            currentSort = sortType;
+            
+            // Aplicar ordenamiento
+            sortResults(sortType);
+        });
+    });
+
+    // Click en resultados de búsqueda
+    document.querySelectorAll('.resultado-item').forEach(item => {
+        item.addEventListener('click', event => {
+            // Evitar que el click en notificaciones o avatar dispare este evento
+            if (!event.target.closest('.notification-button') && !event.target.closest('.notification-dropdown')) {
+                window.location.href = '../vista_previa_del_material/code.html';
+            }
+        });
+    });
+
+    // Notificaciones dropdown
+    const notificationButton = document.querySelector('.notification-button');
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+
+    notificationButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!notificationDropdown.classList.contains('hidden') && !e.target.closest('.notification-dropdown')) {
+            notificationDropdown.classList.add('hidden');
+        }
+    });
+
+    // Menú móvil
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobile-menu');
+        const button = e.target.closest('button[onclick="toggleMobileMenu()"]');
+        if (!button && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+</script>
+
+<!-- Scripts de utilidades del sistema -->
+<script src="../js/toast.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/download-manager.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- Sistema Premium -->
+<script src="../js/premium-check.js"></script>
+
+</body></html>

@@ -1,0 +1,30 @@
+{
+  "name": "kampus",
+  "version": "1.0.0",
+  "description": "Sistema de gestión de materiales universitarios",
+  "scripts": {
+    "dev:css": "tailwindcss -i ./src/tailwind.css -o ./public/tailwind.css --watch",
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./public/tailwind.css --minify",
+    "build:js": "node build-js.js",
+    "build": "npm run build:css && npm run build:js",
+    "serve:node": "http-server . -p 8080",
+    "dev": "concurrently \"npm run dev:css\" \"npm run serve:node\"",
+    "pwa:build": "npm run build && echo 'PWA build complete'",
+    "test": "echo 'Tests not implemented yet'",
+    "lint": "echo 'Linting not configured yet'"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0"
+  },
+  "keywords": [
+    "university",
+    "materials",
+    "education"
+  ],
+  "author": "KAMPUS Team",
+  "license": "MIT"
+}

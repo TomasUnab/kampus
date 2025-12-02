@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Kampus - Dashboard</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="stylesheet" href="../fix-mobile.css">
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/security-manager.js"></script>
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/comments-system.js"></script>
+<script src="../js/push-notifications.js"></script>
+<script src="../js/lazy-loader.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#13a4ec">
+
+<!-- Configuración de logs -->
+<script>
+  window.KAMPUS_LOG_LEVEL = 'info'; // debug | info | warn | error | silent
+</script>
+
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13a4ec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101c22",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between lg:justify-center whitespace-nowrap border-b border-black/10 dark:border-white/10 px-4 sm:px-6 lg:px-10 py-4 gap-4 lg:gap-12">
+<div class="flex items-center gap-3 text-black dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold">Kampus</h1>
+</div>
+
+<!-- Botón menú móvil -->
+<button id="mobile-menu-btn" class="lg:hidden p-2 text-black/60 dark:text-white/60">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+<nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+<a class="text-sm font-medium text-black/90 dark:text-white/90 hover:text-primary dark:hover:text-primary" href="code.html">Inicio</a>
+<a class="text-sm font-medium text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-primary" href="../resultados_de_búsqueda/code.html">Explorar</a>
+<a class="text-sm font-medium text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-primary" href="../mis_materiales/code.html">Mis materiales</a>
+<a class="text-sm font-medium text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-primary" href="../planes/code.html">Planes</a>
+<!-- Botón de Moderación (solo para admins y moderadores) -->
+<a id="moderation-link" class="hidden text-sm font-bold bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-2 rounded-lg hover:from-red-700 hover:to-orange-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2" href="../dashboard_moderacion.html">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+</svg>
+<span>Panel de Moderación</span>
+</a>
+</nav>
+
+<!-- Menú móvil -->
+<div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 bg-white dark:bg-background-dark border-t border-black/10 dark:border-white/10 lg:hidden z-50 shadow-lg">
+<div class="px-4 py-4 space-y-2">
+<a class="block px-4 py-3 text-black/90 dark:text-white/90 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="code.html">🏠 Inicio</a>
+<a class="block px-4 py-3 text-black/60 dark:text-white/60 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../resultados_de_búsqueda/code.html">🔍 Explorar</a>
+<a class="block px-4 py-3 text-black/60 dark:text-white/60 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../mis_materiales/code.html">📚 Mis materiales</a>
+<a class="block px-4 py-3 text-black/60 dark:text-white/60 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../planes/code.html">💎 Planes</a>
+</div>
+</div>
+
+<div class="flex items-center gap-4">
+<!-- Badge de rol (solo para admins y moderadores) -->
+<div id="role-badge" class="hidden"></div>
+<div class="relative">
+<button class="notification-button relative flex items-center justify-center rounded-full size-10 bg-background-light dark:bg-white/10 text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/20">
+<svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+</svg>
+<div class="absolute top-2 right-2 size-2 rounded-full bg-primary ring-2 ring-background-light dark:ring-background-dark"></div>
+</button>
+<div class="notification-dropdown hidden absolute right-0 top-12 w-80 bg-white dark:bg-background-dark rounded-lg shadow-xl border border-black/10 dark:border-white/10 overflow-hidden z-50">
+<div class="px-4 py-3 border-b border-black/10 dark:border-white/10">
+<h3 class="text-sm font-semibold text-black dark:text-white">Notificaciones</h3>
+</div>
+<div class="max-h-96 overflow-y-auto">
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">★</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nueva valoración</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Juan Pérez calificó tu material "Apuntes de Cálculo II" con 5 estrellas</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">💬</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo comentario</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">María González comentó en "Guía de ejercicios de Física I"</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 5 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">📥</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Material descargado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Tu material "Resumen de Historia" fue descargado 10 veces hoy</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 1 día</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">🏆</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo logro desbloqueado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Has alcanzado 100 puntos de reputación</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 días</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t border-black/10 dark:border-white/10 text-center">
+<a href="#" class="text-xs text-primary hover:text-primary/80 font-medium">Ver todas las notificaciones</a>
+</div>
+</div>
+</div>
+<!-- Avatar del usuario sincronizado -->
+<div data-header-avatar class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
+<div class="w-full max-w-4xl space-y-12">
+<div class="text-center space-y-4">
+<h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-black dark:text-white tracking-tighter px-4">Encuentra tu material de estudio</h2>
+<p class="text-lg text-black/60 dark:text-white/60">Busca entre miles de recursos compartidos por estudiantes de todo Chile.</p>
+</div>
+<div class="space-y-6">
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+<svg class="size-5 text-black/50 dark:text-white/50" fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+<input class="form-input w-full rounded-lg border border-black/10 dark:border-white/10 bg-white/50 dark:bg-black/20 h-12 sm:h-14 pl-10 sm:pl-12 pr-4 text-sm sm:text-base text-black dark:text-white placeholder:text-black/50 dark:placeholder:text-white/50 focus:border-primary focus:ring-primary" placeholder="Busca apuntes, guías, exámenes, etc." type="search"/>
+</div>
+<div class="overflow-x-auto pb-2">
+<div class="flex items-center gap-2 min-w-max px-2">
+<div class="relative">
+<button class="filter-btn flex h-8 sm:h-10 items-center justify-center gap-x-1 sm:gap-x-2 rounded bg-white dark:bg-black/20 px-2 sm:px-4 text-xs sm:text-sm font-medium text-black/80 dark:text-white/80 hover:bg-primary/10 dark:hover:bg-primary/20 whitespace-nowrap" data-filter="universidad">
+<span class="filter-text">Universidad</span>
+<svg class="size-4 text-black/50 dark:text-white/50" fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg>
+</button>
+<div class="filter-dropdown hidden absolute top-12 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 min-w-[200px]" data-dropdown="universidad">
+<ul class="py-2">
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Universidad de Chile">Universidad de Chile</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Pontificia Universidad Católica">Pontificia Universidad Católica</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Universidad de Santiago">Universidad de Santiago</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Universidad Técnica Federico Santa María">Universidad Técnica Federico Santa María</li>
+</ul>
+</div>
+</div>
+
+<div class="relative">
+<button class="filter-btn flex h-10 items-center justify-center gap-x-2 rounded bg-white dark:bg-black/20 px-4 text-sm font-medium text-black/80 dark:text-white/80 hover:bg-primary/10 dark:hover:bg-primary/20" data-filter="carrera">
+<span class="filter-text">Carrera</span>
+<svg class="size-4 text-black/50 dark:text-white/50" fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg>
+</button>
+<div class="filter-dropdown hidden absolute top-12 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 min-w-[200px]" data-dropdown="carrera">
+<ul class="py-2">
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Ingeniería Civil">Ingeniería Civil</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Derecho">Derecho</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Medicina">Medicina</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Ingeniería Comercial">Ingeniería Comercial</li>
+</ul>
+</div>
+</div>
+
+<div class="relative">
+<button class="filter-btn flex h-10 items-center justify-center gap-x-2 rounded bg-white dark:bg-black/20 px-4 text-sm font-medium text-black/80 dark:text-white/80 hover:bg-primary/10 dark:hover:bg-primary/20" data-filter="ramo">
+<span class="filter-text">Ramo</span>
+<svg class="size-4 text-black/50 dark:text-white/50" fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg>
+</button>
+<div class="filter-dropdown hidden absolute top-12 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 min-w-[200px]" data-dropdown="ramo">
+<ul class="py-2">
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Cálculo I">Cálculo I</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Cálculo II">Cálculo II</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Álgebra Lineal">Álgebra Lineal</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Física I">Física I</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Programación">Programación</li>
+</ul>
+</div>
+</div>
+
+<div class="relative">
+<button class="filter-btn flex h-10 items-center justify-center gap-x-2 rounded bg-white dark:bg-black/20 px-4 text-sm font-medium text-black/80 dark:text-white/80 hover:bg-primary/10 dark:hover:bg-primary/20" data-filter="semestre">
+<span class="filter-text">Semestre</span>
+<svg class="size-4 text-black/50 dark:text-white/50" fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg>
+</button>
+<div class="filter-dropdown hidden absolute top-12 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 min-w-[200px]" data-dropdown="semestre">
+<ul class="py-2">
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="2024-1">2024-1</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="2023-2">2023-2</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="2023-1">2023-1</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="2022-2">2022-2</li>
+</ul>
+</div>
+</div>
+
+<div class="relative">
+<button class="filter-btn flex h-10 items-center justify-center gap-x-2 rounded bg-white dark:bg-black/20 px-4 text-sm font-medium text-black/80 dark:text-white/80 hover:bg-primary/10 dark:hover:bg-primary/20" data-filter="tipo">
+<span class="filter-text">Tipo de material</span>
+<svg class="size-4 text-black/50 dark:text-white/50" fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+</svg>
+</button>
+<div class="filter-dropdown hidden absolute top-12 left-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 min-w-[200px]" data-dropdown="tipo">
+<ul class="py-2">
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Apunte">Apunte</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Guía">Guía</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Examen">Examen</li>
+<li class="filter-option px-4 py-2 hover:bg-primary/10 dark:hover:bg-primary/20 cursor-pointer text-sm text-black dark:text-white" data-value="Resumen">Resumen</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Sección de Materiales Reorganizada -->
+<section class="w-full bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background-dark py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+    
+    <!-- Materiales Recientes -->
+    <div>
+      <div class="text-center mb-12">
+        <h3 class="text-4xl font-bold text-black dark:text-white mb-3">Materiales Recientes</h3>
+        <p class="text-base text-black/60 dark:text-white/60">Los últimos materiales compartidos por la comunidad</p>
+      </div>
+      
+      <div id="materiales-recientes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="material-card group cursor-pointer" data-title="Apuntes de Cálculo II" data-universidad="Universidad de Chile" data-materia="Matemáticas" data-tipo="Apunte" data-ramo="Cálculo II">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110 bg-gray-200" data-bg-src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDHxul7Nx10gzwdf5y7ENZQ3eI1HxZlopUqO88FlQasy7raPpXiNif_M5qtDrduWt925GFL9Hp4jrzAqGgTzKXRIdHI88kf6NNW_0i-JmNmTprY5aJKneuGrSgbOI-wspxpHZWWCT9sj0mADM1hz26FvHPntne4MDcbpCjBxJK84R9w-BPKw_-DTPzVstXPBwMHjSFxqakWElWtv1A8sEV8HYyqMFXUNpUZwGJQcGF4I_EEdSLPhymlVvdJyi058GGhGcJ9Oit_wI"></div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/90 text-white backdrop-blur-sm">Apunte</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Apuntes de Cálculo II</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1">Universidad de Chile</p>
+              <p class="text-xs text-black/40 dark:text-white/40 mt-1">Matemáticas</p>
+              <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center">
+                  <span class="text-yellow-400">★</span>
+                  <span class="text-sm font-medium ml-1">4.5</span>
+                </div>
+                <span class="text-xs text-gray-400">(23 valoraciones)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="material-card group cursor-pointer" data-title="Guía de ejercicios de Física I" data-universidad="Pontificia UC" data-materia="Física" data-tipo="Guía" data-ramo="Física I">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFCZILSJEr3cfdpN96FJEbquKtmh5xOGJoJsRTS8YBcnF8PTGEvS5h_UmoyoFxI890Qs2kkGIWd-yyRgKQLZb2-fi8pe1Qt3b8sMnVBfXMYw-QjECEZlF66cLk_kmKWpS6kmZtMtp6IwuiX9DUuPA9t1wy8ub0o1AOGG3xrU20NPne5WxFRvBcNwqja6qupzDa3TFkX2tUNpX6QP0MF0WNjzxD7Mbm4ti8v8F-_uJVOdYiFSpZGSIiZrRkNsn9yYMEhq3tzKXiHn8");'></div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/90 text-white backdrop-blur-sm">Guía</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Guía de ejercicios de Física I</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1">Pontificia UC</p>
+              <p class="text-xs text-black/40 dark:text-white/40 mt-1">Física</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="material-card group cursor-pointer" data-title="Examen de Química General" data-universidad="USACH" data-materia="Química" data-tipo="Examen" data-ramo="Química General">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3xDVhxaWodbhi5Ag8j60p7fPXFcRx86ZVJBTOQbJ5YmJ5OyHjs7s9vOLRXs9rNxZFQODhBCV0Lsy-zgAk31vyxsZ4yz_1GhK2nASaND08v66jfZ890BZ4JSOHi3liF-uldAYJn_6U1G72LUxgXulMrsCvSBuJO1NQvjVZ0esbWE1CiPv7LwIY3IDMUajLAZSJoPm1SdYlN9ftETSkxK5V_ITGhC3-1KFjTRm_1KV5ZV200RXjgc6IfsGiFegWlNinWJySo07MI7E");'></div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/90 text-white backdrop-blur-sm">Examen</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Examen de Química General</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1">USACH</p>
+              <p class="text-xs text-black/40 dark:text-white/40 mt-1">Química</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card 4 -->
+        <div class="material-card group cursor-pointer" data-title="Resumen de Historia" data-universidad="Universidad de Chile" data-materia="Historia" data-tipo="Resumen" data-ramo="Historia de Chile">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=500");'></div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/90 text-white backdrop-blur-sm">Resumen</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Resumen de Historia de Chile</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1">Universidad de Chile</p>
+              <p class="text-xs text-black/40 dark:text-white/40 mt-1">Historia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="no-results-recientes" class="hidden text-center py-16">
+        <svg class="mx-auto h-16 w-16 text-black/30 dark:text-white/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <p class="text-lg font-medium text-black/60 dark:text-white/60">No se encontraron materiales recientes</p>
+        <p class="text-sm text-black/40 dark:text-white/40 mt-2">Intenta ajustar tus filtros de búsqueda</p>
+      </div>
+    </div>
+
+    <!-- Materiales Destacados -->
+    <div>
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 mb-4">
+          <svg class="w-8 h-8 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          <h3 class="text-4xl font-bold text-black dark:text-white">Materiales Destacados</h3>
+        </div>
+        <p class="text-base text-black/60 dark:text-white/60">Los materiales mejor valorados por los estudiantes</p>
+      </div>
+      
+      <div id="materiales-destacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card Destacada 1 -->
+        <div class="material-card group cursor-pointer" data-title="Apuntes de Programación Avanzada" data-universidad="Universidad de Chile" data-materia="Informática" data-tipo="Apunte" data-ramo="Programación">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-amber-500/20">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDRRhN9nq8mJj5iGTLrXUpWBECITiV7INmwvNMmVSE5PCJdOWS7pfTBvUL0qYQtlApedC0U2GgDw4CvVmBnbcQi4iJPB86Vw1o5l3Q8pJIrQtTgtoLf2-ahl1t9QqhlkpS7w6QFkWCgXC2YgeTX0MKWo_Kq_3nZU9_NzLzG6rcqLRFfhmmpoWhEMTNI6cEIuSxkB6m0o-4wmTYVIBTSTptd8pyPK2m9fKVgNyFYuo_KSR8DzwQKviKasOwnRydFDAxEHSeY-tLfkZk");'></div>
+              <div class="absolute top-2 left-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-white">★ Destacado</span>
+              </div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/90 text-white backdrop-blur-sm">Apunte</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Apuntes de Programación Avanzada</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1 mb-3">Universidad de Chile • Informática</p>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-sm font-bold text-black dark:text-white ml-1">4.9</span>
+                </div>
+                <span class="text-xs text-black/50 dark:text-white/50">(128 valoraciones)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Destacada 2 -->
+        <div class="material-card group cursor-pointer" data-title="Guía de ejercicios de Álgebra Lineal" data-universidad="Pontificia UC" data-materia="Matemáticas" data-tipo="Guía" data-ramo="Álgebra Lineal">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-amber-500/20">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZmKYCyFmviktFNuL2P3pTlNn3UOznTfEbiwEYkE6eXmsRvKUijqyp-auhC5MzH8vo9dJdYPuZuXp8pPbdot7iOVz3Va_7sPcxikEHbRSfforp_Iq_nKmayr3AjnLlOtsr9zfh2hreyRfKrwBX4HSMpQaf1gd3tjaSQtzUQLhZRHnyUNSakx5uXut2xxW2X0-3vR9gZ3fWrJaUJ2sFmxWkpRR53NFVhV_hQIanXX-tzgFMePGt4H3qmuOHo40rvgYg-lS6HAbQIsI");'></div>
+              <div class="absolute top-2 left-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-white">★ Destacado</span>
+              </div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/90 text-white backdrop-blur-sm">Guía</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Guía de ejercicios de Álgebra Lineal</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1 mb-3">Pontificia UC • Matemáticas</p>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-sm font-bold text-black dark:text-white ml-1">4.7</span>
+                </div>
+                <span class="text-xs text-black/50 dark:text-white/50">(95 valoraciones)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Destacada 3 -->
+        <div class="material-card group cursor-pointer" data-title="Examen de Probabilidad y Estadística" data-universidad="USACH" data-materia="Matemáticas" data-tipo="Examen" data-ramo="Estadística">
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-amber-500/20">
+            <div class="aspect-video w-full overflow-hidden relative">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXJDyWHZvTf057Tacx_EGd4u64j3rKjdjdfVdzNvVknyqkmDFOi3-ttXnNcYjTwn2XdbrIWwhSyHIEAHC1dL67nYjkhEhjEMI4FLizqIazBDe6cyTFYF49zPE3gQTrNDHGAsPEexVavlI_fJiZMyydbynpG6gw7XmG-1WheBB41lPWsquYxdHBNJDp9oCGFQpE4gDuCRbXXrMP0HCdpkpFeqIVc7nc_LeogZ1EzKMWu-WKdXcCTvVZn2rmH2qNU4Uxg4aBfhJ2jBM");'></div>
+              <div class="absolute top-2 left-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-white">★ Destacado</span>
+              </div>
+              <div class="absolute top-2 right-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/90 text-white backdrop-blur-sm">Examen</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="text-lg font-bold text-black dark:text-white mb-2 line-clamp-2">Examen de Probabilidad y Estadística</h4>
+              <p class="text-sm text-black/60 dark:text-white/60 line-clamp-1 mb-3">USACH • Matemáticas</p>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-sm font-bold text-black dark:text-white ml-1">4.6</span>
+                </div>
+                <span class="text-xs text-black/50 dark:text-white/50">(82 valoraciones)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="no-results-destacados" class="hidden text-center py-16">
+        <svg class="mx-auto h-16 w-16 text-black/30 dark:text-white/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+        </svg>
+        <p class="text-lg font-medium text-black/60 dark:text-white/60">No se encontraron materiales destacados</p>
+        <p class="text-sm text-black/40 dark:text-white/40 mt-2">Intenta ajustar tus filtros de búsqueda</p>
+      </div>
+    </div>
+
+    <!-- Tendencias de la Semana -->
+    <div>
+      <div class="text-center mb-12">
+        <h3 class="text-4xl font-bold text-black dark:text-white mb-3">📊 Tendencias de la Semana</h3>
+        <p class="text-base text-black/60 dark:text-white/60">Lo más destacado de la comunidad Kampus</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Material Más Descargado -->
+        <div class="bg-gradient-to-br from-blue-50 to-primary/10 dark:from-blue-900/20 dark:to-primary/10 rounded-xl p-6 border-2 border-primary/20">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="bg-primary/20 text-primary text-xs font-bold px-2.5 py-1 rounded-full">+342 esta semana</span>
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Material más descargado</h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">"Resumen Completo de Cálculo II"</p>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Universidad de Chile • PDF</p>
+        </div>
+
+        <!-- Carrera Más Activa -->
+        <div class="bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/10 rounded-xl p-6 border-2 border-green-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+            </svg>
+            <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-xs font-bold px-2.5 py-1 rounded-full">156 materiales</span>
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Carrera más activa</h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">Ingeniería Civil Informática</p>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Con mayor cantidad de materiales subidos</p>
+        </div>
+
+        <!-- Archivo Mejor Calificado -->
+        <div class="bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-900/20 dark:to-amber-800/10 rounded-xl p-6 border-2 border-amber-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-10 h-10 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+            </svg>
+            <span class="bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-xs font-bold px-2.5 py-1 rounded-full">5.0 ★</span>
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Archivo mejor calificado</h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">"Guía Práctica de Física I"</p>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">USACH • 47 valoraciones</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ranking de Usuarios -->
+    <div>
+      <div class="text-center mb-12">
+        <h3 class="text-4xl font-bold text-black dark:text-white mb-3">🏆 Usuarios Más Activos</h3>
+        <p class="text-base text-black/60 dark:text-white/60">Los estudiantes que más contribuyen a la comunidad</p>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Puesto 1 -->
+        <div class="bg-gradient-to-br from-yellow-100 via-amber-50 to-orange-100 dark:from-yellow-900/30 dark:via-amber-900/20 dark:to-orange-900/30 rounded-xl p-6 border-2 border-yellow-400/50 relative overflow-hidden">
+          <div class="absolute top-2 right-2 text-4xl">🥇</div>
+          <div class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-xl mb-3">
+              CS
+            </div>
+            <h4 class="font-bold text-gray-900 dark:text-white">Carlos Silva</h4>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Universidad de Chile</p>
+            <div class="flex items-center gap-1 text-sm font-bold text-primary">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+              </svg>
+              <span>2,847 pts</span>
+            </div>
+            <div class="flex gap-1 mt-2">
+              <span title="Experto Contribuidor">🏅</span>
+              <span title="Estudiante del Mes">⭐</span>
+              <span title="100 Materiales">💯</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puesto 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 relative overflow-hidden">
+          <div class="absolute top-2 right-2 text-3xl">🥈</div>
+          <div class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-xl mb-3">
+              MG
+            </div>
+            <h4 class="font-bold text-gray-900 dark:text-white">María González</h4>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Pontificia UC</p>
+            <div class="flex items-center gap-1 text-sm font-bold text-primary">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+              </svg>
+              <span>2,103 pts</span>
+            </div>
+            <div class="flex gap-1 mt-2">
+              <span title="Top Colaboradora">🌟</span>
+              <span title="50 Materiales">🎯</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puesto 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 relative overflow-hidden">
+          <div class="absolute top-2 right-2 text-3xl">🥉</div>
+          <div class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-300 to-orange-400 flex items-center justify-center text-white font-bold text-xl mb-3">
+              DM
+            </div>
+            <h4 class="font-bold text-gray-900 dark:text-white">Diego Muñoz</h4>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">USACH</p>
+            <div class="flex items-center gap-1 text-sm font-bold text-primary">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+              </svg>
+              <span>1,876 pts</span>
+            </div>
+            <div class="flex gap-1 mt-2">
+              <span title="Destacado">✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puesto 4 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700">
+          <div class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-xl mb-3">
+              IL
+            </div>
+            <h4 class="font-bold text-gray-900 dark:text-white">Isidora López</h4>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">UFTSmM</p>
+            <div class="flex items-center gap-1 text-sm font-bold text-primary">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+              </svg>
+              <span>1,542 pts</span>
+            </div>
+            <div class="flex gap-1 mt-2">
+              <span title="Activa">🚀</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-8">
+        <a href="../planes/code.html" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          <span>Ver Planes Premium</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+<script>
+    const searchInput = document.querySelector('input[type="search"]');
+    
+    // Búsqueda en tiempo real
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        filterMaterials(searchTerm);
+    });
+
+    // Búsqueda al presionar Enter
+    searchInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const searchTerm = this.value.toLowerCase().trim();
+            if (searchTerm) {
+                // Guardar término de búsqueda en sessionStorage para la página de resultados
+                sessionStorage.setItem('searchTerm', searchTerm);
+                window.location.href = '../resultados_de_búsqueda/code.html';
+            }
+        }
+    });
+
+    function filterMaterials(searchTerm) {
+        const allCards = document.querySelectorAll('.material-card');
+        const recientesContainer = document.getElementById('materiales-recientes');
+        const destacadosContainer = document.getElementById('materiales-destacados');
+        const noResultsRecientes = document.getElementById('no-results-recientes');
+        const noResultsDestacados = document.getElementById('no-results-destacados');
+        
+        let visibleRecientes = 0;
+        let visibleDestacados = 0;
+
+        allCards.forEach(card => {
+            const title = card.getAttribute('data-title').toLowerCase();
+            const universidad = card.getAttribute('data-universidad').toLowerCase();
+            const materia = card.getAttribute('data-materia').toLowerCase();
+            const tipo = card.getAttribute('data-tipo').toLowerCase();
+            const ramo = card.getAttribute('data-ramo').toLowerCase();
+            
+            const matches = searchTerm === '' || 
+                          title.includes(searchTerm) || 
+                          universidad.includes(searchTerm) || 
+                          materia.includes(searchTerm) ||
+                          tipo.includes(searchTerm) ||
+                          ramo.includes(searchTerm);
+            
+            if (matches) {
+                card.style.display = '';
+                if (recientesContainer.contains(card)) visibleRecientes++;
+                if (destacadosContainer.contains(card)) visibleDestacados++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Mostrar/ocultar mensajes de "sin resultados"
+        if (visibleRecientes === 0 && searchTerm !== '') {
+            noResultsRecientes.classList.remove('hidden');
+            recientesContainer.style.display = 'none';
+        } else {
+            noResultsRecientes.classList.add('hidden');
+            recientesContainer.style.display = '';
+        }
+
+        if (visibleDestacados === 0 && searchTerm !== '') {
+            noResultsDestacados.classList.remove('hidden');
+            destacadosContainer.style.display = 'none';
+        } else {
+            noResultsDestacados.classList.add('hidden');
+            destacadosContainer.style.display = '';
+        }
+    }
+
+    document.querySelectorAll('.material-card').forEach(item => {
+        item.addEventListener('click', function() {
+            window.location.href = '../vista_previa_del_material/code.html';
+        });
+    });
+
+    // Notificaciones dropdown
+    const notificationButton = document.querySelector('.notification-button');
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+
+    notificationButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const filterType = button.getAttribute('data-filter');
+            const dropdown = document.querySelector(`.filter-dropdown[data-dropdown="${filterType}"]`);
+            
+            // Cerrar notificaciones si está abierto
+            notificationDropdown.classList.add('hidden');
+            
+            filterDropdowns.forEach(dd => {
+                if (dd !== dropdown) {
+                    dd.classList.add('hidden');
+                }
+            });
+            
+            dropdown.classList.toggle('hidden');
+        });
+    });
+
+    document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            const dropdown = this.closest('.filter-dropdown');
+            const filterType = dropdown.getAttribute('data-dropdown');
+            const button = document.querySelector(`.filter-btn[data-filter="${filterType}"]`);
+            const textSpan = button.querySelector('.filter-text');
+            
+            textSpan.textContent = value;
+            dropdown.classList.add('hidden');
+        });
+    });
+
+    document.addEventListener('click', () => {
+        filterDropdowns.forEach(dd => dd.classList.add('hidden'));
+        notificationDropdown.classList.add('hidden');
+    });
+
+    // Menú móvil - ejecutar después de que cargue todo
+    setTimeout(() => {
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        console.log('Botón:', mobileMenuBtn);
+        console.log('Menú:', mobileMenu);
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Click en menú');
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        } else {
+            console.error('No se encontraron elementos del menú');
+        }
+    }, 1000);
+
+    // ==========================================
+    // NOTA: El botón de moderación y badge de rol
+    // ahora se gestionan automáticamente por header-sync.js
+    // ==========================================
+</script>
+
+<!-- Scripts de utilidades del sistema -->
+<script src="../js/toast.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/download-manager.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- Sistema Premium -->
+<script src="../js/premium-check.js"></script>
+
+</body></html>

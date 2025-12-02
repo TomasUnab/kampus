@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kampus - Subir Material</title>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+            "foreground-light": "#111618",
+            "foreground-dark": "#f0f3f4",
+            "card-light": "#ffffff",
+            "card-dark": "#192730",
+            "border-light": "#dbe2e6",
+            "border-dark": "#32434e",
+            "muted-foreground-light": "#617c89",
+            "muted-foreground-dark": "#94a3b8",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark">
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 z-10 bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-b border-border-light dark:border-border-dark">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-center h-16 gap-12">
+<div class="flex items-center gap-4">
+<div class="text-primary size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold">Kampus</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-muted-foreground-light dark:text-muted-foreground-dark hover:text-primary transition-colors" href="../dashboard_principal/code.html">Inicio</a>
+<a class="text-sm font-medium text-foreground-light dark:text-foreground-dark hover:text-primary transition-colors" href="../resultados_de_búsqueda/code.html">Explorar</a>
+<a class="text-sm font-medium text-muted-foreground-light dark:text-muted-foreground-dark hover:text-primary transition-colors" href="../mis_materiales/code.html">Mis materiales</a>
+<a class="text-sm font-medium text-muted-foreground-light dark:text-muted-foreground-dark hover:text-primary transition-colors" href="../planes/code.html">Planes</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="relative">
+<button class="notification-button p-2 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-muted-foreground-light dark:text-muted-foreground-dark hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="notification-dropdown hidden absolute right-0 top-12 w-80 bg-white dark:bg-background-dark rounded-lg shadow-xl border border-black/10 dark:border-white/10 overflow-hidden z-50">
+<div class="px-4 py-3 border-b border-black/10 dark:border-white/10">
+<h3 class="text-sm font-semibold text-black dark:text-white">Notificaciones</h3>
+</div>
+<div class="max-h-96 overflow-y-auto">
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">★</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nueva valoración</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Juan Pérez calificó tu material "Apuntes de Cálculo II" con 5 estrellas</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">💬</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo comentario</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">María González comentó en "Guía de ejercicios de Física I"</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 5 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">📥</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Material descargado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Tu material "Resumen de Historia" fue descargado 10 veces hoy</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 1 día</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">🏆</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo logro desbloqueado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Has alcanzado 100 puntos de reputación</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 días</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t border-black/10 dark:border-white/10 text-center">
+<a href="#" class="text-xs text-primary hover:text-primary/80 font-medium">Ver todas las notificaciones</a>
+</div>
+</div>
+</div>
+<div data-header-avatar class="size-10 rounded-full bg-cover bg-center cursor-pointer" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background-dark py-12 md:py-16">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Header Section -->
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4">
+          <span class="material-symbols-outlined text-4xl text-primary">cloud_upload</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Sube tu Material de Estudio</h2>
+        <p class="text-lg text-muted-foreground-light dark:text-muted-foreground-dark max-w-2xl mx-auto">
+          Comparte tus apuntes, resúmenes y guías con miles de estudiantes en Chile
+        </p>
+      </div>
+
+      <!-- Main Form Card -->
+      <div class="bg-card-light dark:bg-card-dark rounded-2xl shadow-xl border border-border-light dark:border-border-dark overflow-hidden">
+        <form class="divide-y divide-border-light dark:divide-border-dark">
+          
+          <!-- Sección 1: Información Académica -->
+          <div class="p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-2xl text-primary">school</span>
+              <h3 class="text-xl font-bold">Información Académica</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="university">
+                  Universidad *
+                </label>
+                <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="university" required>
+                  <option value="">Selecciona tu universidad</option>
+                  <option>Pontificia Universidad Católica de Chile</option>
+                  <option>Universidad de Chile</option>
+                  <option>Universidad de Santiago de Chile</option>
+                  <option>Universidad Técnica Federico Santa María</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="career">
+                  Carrera *
+                </label>
+                <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="career" required>
+                  <option value="">Selecciona tu carrera</option>
+                  <option>Ingeniería Civil</option>
+                  <option>Ingeniería Comercial</option>
+                  <option>Derecho</option>
+                  <option>Medicina</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="course">
+                  Ramo *
+                </label>
+                <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="course" required>
+                  <option value="">Selecciona un ramo</option>
+                  <option>Cálculo I</option>
+                  <option>Cálculo II</option>
+                  <option>Álgebra Lineal</option>
+                  <option>Física I</option>
+                  <option>Programación</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="semester">
+                  Semestre *
+                </label>
+                <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="semester" required>
+                  <option value="">Selecciona el semestre</option>
+                  <option>2024-1</option>
+                  <option>2023-2</option>
+                  <option>2023-1</option>
+                  <option>2022-2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 2: Detalles del Material -->
+          <div class="p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-2xl text-primary">description</span>
+              <h3 class="text-xl font-bold">Detalles del Material</h3>
+            </div>
+            
+            <div class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="material-type">
+                    Tipo de Material *
+                  </label>
+                  <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="material-type" required>
+                    <option value="">Selecciona el tipo</option>
+                    <option>Apunte</option>
+                    <option>Resumen</option>
+                    <option>Guía de ejercicios</option>
+                    <option>Examen</option>
+                    <option>Tarea</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="file-format">
+                    Formato de Archivo *
+                  </label>
+                  <select class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="file-format" required>
+                    <option value="">Selecciona el formato</option>
+                    <option value="pdf">📄 PDF</option>
+                    <option value="docx">📝 DOCX (Word)</option>
+                    <option value="xlsx">📊 XLSX (Excel)</option>
+                    <option value="pptx">📽️ PPTX (PowerPoint)</option>
+                    <option value="txt">📃 TXT (Texto)</option>
+                    <option value="imagen">🖼️ Imagen (JPG, PNG)</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark" for="title">
+                  Título del Material *
+                </label>
+                <input 
+                  class="w-full h-12 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder-muted-foreground-light dark:placeholder-muted-foreground-dark" 
+                  id="title" 
+                  placeholder="Ej: Resumen Completo para la Solemne 1"
+                  type="text"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2 text-foreground-light dark:text-foreground-dark">
+                  Descripción (Opcional)
+                </label>
+                <textarea 
+                  class="w-full px-4 py-3 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder-muted-foreground-light dark:placeholder-muted-foreground-dark resize-none"
+                  rows="3"
+                  placeholder="Describe brevemente el contenido de tu material..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 3: Subir Archivo -->
+          <div class="p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <span class="material-symbols-outlined text-2xl text-primary">attach_file</span>
+              <h3 class="text-xl font-bold">Archivo</h3>
+            </div>
+            
+            <div class="relative group">
+              <input class="sr-only" id="file-upload" name="file-upload" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.jpeg,.png"/>
+              <label for="file-upload" class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border-light dark:border-border-dark px-6 py-12 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all group">
+                <span class="material-symbols-outlined text-6xl text-muted-foreground-light dark:text-muted-foreground-dark group-hover:text-primary group-hover:scale-110 transition-all">
+                  upload_file
+                </span>
+                <div class="mt-4 text-center">
+                  <p class="text-base font-semibold text-foreground-light dark:text-foreground-dark group-hover:text-primary transition-colors">
+                    Haz clic para seleccionar un archivo
+                  </p>
+                  <p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark mt-1">
+                    o arrástralo aquí
+                  </p>
+                  <p class="text-xs text-muted-foreground-light dark:text-muted-foreground-dark mt-3">
+                    PDF, DOCX, PPTX, XLSX, TXT, imágenes • Máximo 10MB
+                  </p>
+                </div>
+              </label>
+              <div id="file-preview" class="hidden mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-primary">check_circle</span>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold" id="file-name"></p>
+                    <p class="text-xs text-muted-foreground-light dark:text-muted-foreground-dark" id="file-size"></p>
+                  </div>
+                  <button type="button" class="text-muted-foreground-light hover:text-red-500 transition-colors" onclick="removeFile()">
+                    <span class="material-symbols-outlined">close</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 4: Protección y Términos -->
+          <div class="p-6 md:p-8 space-y-6">
+            <!-- Alerta de Protección -->
+            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
+              <div class="flex gap-3">
+                <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 flex-shrink-0">verified_user</span>
+                <div class="flex-1">
+                  <h4 class="font-bold text-amber-900 dark:text-amber-200 mb-1">Protección de Contenido con IA</h4>
+                  <p class="text-sm text-amber-800 dark:text-amber-300">
+                    Tu material será verificado automáticamente para proteger la originalidad y derechos de autor.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checkbox de Términos -->
+            <div class="bg-background-light dark:bg-background-dark border-2 border-border-light dark:border-border-dark rounded-xl p-4">
+              <div class="flex items-start gap-3">
+                <input 
+                  class="mt-1 h-5 w-5 rounded border-border-light dark:border-border-dark text-primary focus:ring-primary/50 cursor-pointer" 
+                  id="terms" 
+                  name="terms" 
+                  type="checkbox" 
+                  required
+                />
+                <div class="flex-1">
+                  <label class="font-semibold text-foreground-light dark:text-foreground-dark cursor-pointer block" for="terms">
+                    Confirmo que soy el autor de este material o tengo permiso para compartirlo
+                  </label>
+                  <p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark mt-2">
+                    Al subir, aceptas nuestros <a href="#" class="text-primary hover:underline font-medium">Términos de Servicio</a> y confirmas que este material no infringe derechos de autor.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="p-6 md:p-8 bg-gray-50 dark:bg-gray-900/50">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark">
+                * Campos obligatorios
+              </p>
+              <div class="flex gap-3 w-full sm:w-auto">
+                <button 
+                  type="button" 
+                  class="flex-1 sm:flex-none px-6 py-3 rounded-lg font-semibold text-foreground-light dark:text-foreground-dark bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-800 transition-all"
+                  onclick="window.history.back()"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit" 
+                  class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg font-bold text-white bg-primary hover:bg-primary/90 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark transition-all shadow-lg shadow-primary/25"
+                >
+                  <span class="material-symbols-outlined">cloud_upload</span>
+                  Subir Material
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Notificaciones dropdown
+    const notificationButton = document.querySelector('.notification-button');
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+
+    notificationButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!notificationDropdown.classList.contains('hidden') && !e.target.closest('.notification-dropdown')) {
+            notificationDropdown.classList.add('hidden');
+        }
+    });
+
+    // File upload preview
+    const fileInput = document.getElementById('file-upload');
+    const filePreview = document.getElementById('file-preview');
+    const fileName = document.getElementById('file-name');
+    const fileSize = document.getElementById('file-size');
+
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            filePreview.classList.remove('hidden');
+        }
+    });
+
+    function removeFile() {
+        fileInput.value = '';
+        filePreview.classList.add('hidden');
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    // Form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validar que todos los campos requeridos estén completos
+        const requiredFields = this.querySelectorAll('[required]');
+        let allValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value) {
+                allValid = false;
+                field.classList.add('border-red-500');
+            } else {
+                field.classList.remove('border-red-500');
+            }
+        });
+        
+        if (allValid && fileInput.files.length > 0) {
+            // Simular carga con animación
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Subiendo...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = '../vista_previa_del_material/code.html';
+            }, 1500);
+        } else if (fileInput.files.length === 0) {
+            alert('Por favor selecciona un archivo para subir');
+        } else {
+            alert('Por favor completa todos los campos obligatorios');
+        }
+    });
+
+    // Drag and drop functionality
+    const dropZone = document.querySelector('label[for="file-upload"]');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.add('border-primary', 'bg-primary/10');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.remove('border-primary', 'bg-primary/10');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+        
+        if (files.length > 0) {
+            const file = files[0];
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            filePreview.classList.remove('hidden');
+        }
+    }, false);
+</script>
+
+<!-- Scripts de utilidades del sistema -->
+<script src="../js/toast.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/download-manager.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- Sistema Premium -->
+<script src="../js/premium-check.js"></script>
+
+</body></html>

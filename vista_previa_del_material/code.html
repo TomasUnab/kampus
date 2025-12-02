@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Kampus - Material de Estudio</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-black/10 dark:border-white/10">
+<div class="container mx-auto px-6">
+<div class="flex items-center justify-center h-16 gap-12">
+<a class="flex items-center gap-3 text-gray-800 dark:text-white" href="#">
+<svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path></svg>
+<h1 class="text-xl font-bold">Kampus</h1>
+</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../dashboard_principal/code.html">Inicio</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../resultados_de_búsqueda/code.html">Explorar</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../mis_materiales/code.html">Mis materiales</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../planes/code.html">Planes</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="relative">
+<button class="notification-button p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="notification-dropdown hidden absolute right-0 top-12 w-80 bg-white dark:bg-background-dark rounded-lg shadow-xl border border-black/10 dark:border-white/10 overflow-hidden z-50">
+<div class="px-4 py-3 border-b border-black/10 dark:border-white/10">
+<h3 class="text-sm font-semibold text-black dark:text-white">Notificaciones</h3>
+</div>
+<div class="max-h-96 overflow-y-auto">
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">★</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nueva valoración</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Juan Pérez calificó tu material "Apuntes de Cálculo II" con 5 estrellas</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">💬</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo comentario</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">María González comentó en "Guía de ejercicios de Física I"</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 5 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">📥</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Material descargado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Tu material "Resumen de Historia" fue descargado 10 veces hoy</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 1 día</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">🏆</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo logro desbloqueado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Has alcanzado 100 puntos de reputación</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 días</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t border-black/10 dark:border-white/10 text-center">
+<a href="#" class="text-xs text-primary hover:text-primary/80 font-medium">Ver todas las notificaciones</a>
+</div>
+</div>
+</div>
+<div data-header-avatar class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 py-6">
+<!-- Breadcrumbs -->
+<div class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+<a class="hover:text-primary" href="../dashboard_principal/code.html">Inicio</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary" href="../resultados_de_búsqueda/code.html">Explorar</a>
+<span class="mx-2">/</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">Cálculo I</span>
+</div>
+
+<!-- Título -->
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Guía de Ejercicios - Cálculo I</h2>
+
+<!-- Layout Principal: 2 columnas -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Columna Principal (2/3) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Grid: Imagen + Info -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Imagen con botón de play -->
+<div class="bg-gray-200 dark:bg-gray-800 rounded-xl aspect-video flex items-center justify-center">
+<div class="relative w-full h-full bg-cover bg-center rounded-xl flex items-center justify-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIn6pP6BrGQpojKgP78YTOIEySkFAzJz1KvW-70q75XIRsotEhFaqRCF0bEQR_21Nz9OSF50GwxzKRYnbOx0H-EY8ZbLskXOQr3gRPCAZ8LPiza5X7wg04kxweHZmQW8afR2Pu7bEAW9zwyQn9OQ69E8k-lOHzETHQvd3R8J9FrQEd4jusTtTjrHIGpmhZFXJxUIaosLjGbVUfNL5BeQFZcn-2eqrcYrQwwkQICWIMYSDM3_60gAHYTUCMyhrWteONWiR5WJOZogc");'>
+<div class="absolute inset-0 bg-black/30 rounded-xl"></div>
+<button id="preview-material-btn" class="relative z-10 flex items-center justify-center size-20 bg-black/50 text-white rounded-full hover:bg-black/70 hover:scale-110 transition-all">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
+<path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+</svg>
+</button>
+</div>
+</div>
+
+<!-- Información del archivo -->
+<div class="bg-black/5 dark:bg-white/5 rounded-xl p-5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-3">Información del archivo</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between">
+<span class="text-gray-500 dark:text-gray-400">Fecha</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">15 mar 2023</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-500 dark:text-gray-400">Autor</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">Prof. Carlos P.</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-500 dark:text-gray-400">Universidad</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">U. de Santiago</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-500 dark:text-gray-400">Curso</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">Cálculo I</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-500 dark:text-gray-400">Tipo</span>
+<span class="text-gray-800 dark:text-gray-200 font-medium">Guía ejercicios</span>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-black/10 dark:border-white/10">
+<span class="text-gray-500 dark:text-gray-400">Calificación</span>
+<div class="flex items-center gap-1 text-gray-800 dark:text-gray-200 font-medium">
+<span class="material-symbols-outlined text-amber-500 text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.5 / 5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Descripción + Botones -->
+<div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm">
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4">
+Esta guía de ejercicios cubre los temas fundamentales de Cálculo I, incluyendo límites, derivadas e integrales. Ideal para estudiantes de primer año de ingeniería y ciencias.
+</p>
+<div class="flex items-center gap-3 pt-2" id="material-actions-container">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white font-bold text-sm hover:bg-opacity-90 transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>Descargar</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 text-gray-800 dark:text-gray-200 font-bold text-sm hover:bg-black/10 dark:hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-lg">bookmark</span>
+<span>Guardar</span>
+</button>
+</div>
+</div>
+
+<!-- Comentarios (compactos) -->
+<div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Comentarios (3)</h3>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACabeMZ520MW4RGXhwUvl5Olg1t-gvTqHQSbYOYNdOABlJFvfWQvhjhpaiKSHYt4i_LLcIqnurYGCLAPBNH3QltwLGYcd4_lnXPqgbXPFUmr3paoH61azrSXsLYLkKOY6sHpHbXMGd9lxeSXO58MOHS1uKFbViP0slp17Q3JkpY-CZzTiQ9xcnp2F1MugJS5r_h7Hh7sA2T2xhidrws_VQwMXZ5qPBOm29xcz4T5SFyUqC0xyuo7ljnbZp1BnVzA8cKyRz_9UTNjw");'></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<p class="font-bold text-sm text-gray-800 dark:text-gray-200">Sofía R.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">2 semanas atrás</p>
+</div>
+<p class="text-sm text-gray-700 dark:text-gray-300">Excelente guía, me ayudó mucho a entender los conceptos básicos.</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDs8e_Yg62Qj_00tsRpbg3ZP2vUNx1obgjy7ORotE-N1r3-fkjN9BWvJrR34CsFOswQ6SA-Urzyggu2iOj-nix32kI2x8jyRIMUJCQXNQ8H9a6VJAjZqkwAytsDLggOQl0MD0f2kaAAxbKWShOfglK1_pRs-KyDHADEYZCJax1S3nTKYO19hO15FlajHlWB2buNlMRZs2unvwUznbdHf7Ntas2x9-HNgrlwqtepECT_P-UXqyzexX6i2anmnHunEtXTwa36y3baWw4");'></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<p class="font-bold text-sm text-gray-800 dark:text-gray-200">Diego M.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">1 mes atrás</p>
+</div>
+<p class="text-sm text-gray-700 dark:text-gray-300">Muy completa, pero podría tener más ejercicios resueltos.</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzxjk0_qLuaUeroLWm7VjSh5-bJWgOvZN3MEoXl2Vfq_hDFPrcwcqznwySS_Ft8pKbFeSkoF5KsFkYpLmFiT2mUYa_fTobMww0lPpynMdb_hft3it-n_HyJnFFC-cgtVKdbnbffjka0IFX26aVZBgS2TNbNZani4ldj-3ffCdDgEhNyhLWmweZqvaQwef3mUYnXE0Hz957EJp93cL_RCGTHyQBP_Q5Ikco99f-LP63YXsVk9k49qSTKwb6AiqQaByBkDH51ODqqoc");'></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<p class="font-bold text-sm text-gray-800 dark:text-gray-200">Isidora L.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">2 meses atrás</p>
+</div>
+<p class="text-sm text-gray-700 dark:text-gray-300">Perfecta para repasar antes de la prueba. Gracias!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Sidebar (1/3) -->
+<aside class="space-y-6">
+<!-- Calificar -->
+<div class="bg-black/5 dark:bg-white/5 rounded-xl p-5 sticky top-24">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Calificar material</h3>
+<fieldset class="flex justify-center gap-2 mb-3" id="star-rating">
+<legend class="sr-only">Calificación por estrellas</legend>
+<input class="sr-only" id="star1" name="rating" type="radio" value="1"/>
+<label class="star-label cursor-pointer text-gray-400 transition-colors" for="star1" data-rating="1"><span class="material-symbols-outlined !text-3xl">star</span></label>
+<input class="sr-only" id="star2" name="rating" type="radio" value="2"/>
+<label class="star-label cursor-pointer text-gray-400 transition-colors" for="star2" data-rating="2"><span class="material-symbols-outlined !text-3xl">star</span></label>
+<input class="sr-only" id="star3" name="rating" type="radio" value="3"/>
+<label class="star-label cursor-pointer text-gray-400 transition-colors" for="star3" data-rating="3"><span class="material-symbols-outlined !text-3xl">star</span></label>
+<input class="sr-only" id="star4" name="rating" type="radio" value="4"/>
+<label class="star-label cursor-pointer text-gray-400 transition-colors" for="star4" data-rating="4"><span class="material-symbols-outlined !text-3xl">star</span></label>
+<input class="sr-only" id="star5" name="rating" type="radio" value="5"/>
+<label class="star-label cursor-pointer text-gray-400 transition-colors" for="star5" data-rating="5"><span class="material-symbols-outlined !text-3xl">star</span></label>
+</fieldset>
+<button class="w-full px-4 py-2 rounded-lg bg-primary text-white font-bold text-sm hover:bg-opacity-90 transition-all">Enviar calificación</button>
+
+<!-- Reportar -->
+<div class="mt-5 pt-5 border-t border-black/10 dark:border-white/10">
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">¿Algún problema?</h3>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-3">Reporta cualquier problema con este material.</p>
+<button class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-sm hover:bg-red-500/20 dark:hover:bg-red-500/30 transition-all">
+<span class="material-symbols-outlined text-base">flag</span>
+<span>Reportar</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<script>
+    // Notificaciones dropdown
+    const notificationButton = document.querySelector('.notification-button');
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+
+    notificationButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!notificationDropdown.classList.contains('hidden') && !e.target.closest('.notification-dropdown')) {
+            notificationDropdown.classList.add('hidden');
+        }
+    });
+
+    // Sistema de calificación por estrellas mejorado
+    const starLabels = document.querySelectorAll('.star-label');
+    const starInputs = document.querySelectorAll('input[name="rating"]');
+    let currentRating = 0;
+    
+    // Función para actualizar las estrellas visualmente
+    function updateStars(rating, isHover = false) {
+        starLabels.forEach((label, index) => {
+            const starNumber = index + 1;
+            // Remover todas las clases de color
+            label.classList.remove('text-gray-400', 'text-amber-400', 'text-amber-500');
+            
+            if (starNumber <= rating) {
+                if (isHover) {
+                    label.classList.add('text-amber-400'); // Color hover
+                } else {
+                    label.classList.add('text-amber-500'); // Color seleccionado
+                }
+            } else {
+                label.classList.add('text-gray-400'); // Color default
+            }
+        });
+    }
+    
+    // Evento click en las estrellas
+    starLabels.forEach((label) => {
+        label.addEventListener('click', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            currentRating = rating;
+            
+            // Marcar el input correspondiente
+            const input = document.getElementById('star' + rating);
+            if (input) {
+                input.checked = true;
+            }
+            
+            // Actualizar visualmente
+            updateStars(rating, false);
+        });
+        
+        // Efecto hover
+        label.addEventListener('mouseenter', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            updateStars(rating, true);
+        });
+    });
+    
+    // Al salir del área de estrellas, restaurar al estado seleccionado
+    const starContainer = document.getElementById('star-rating');
+    if (starContainer) {
+        starContainer.addEventListener('mouseleave', function() {
+            if (currentRating > 0) {
+                updateStars(currentRating, false);
+            } else {
+                updateStars(0, false);
+            }
+        });
+    }
+</script>
+
+<!-- Script de Previsualización del Material -->
+<script>
+document.getElementById('preview-material-btn').addEventListener('click', function() {
+  // Crear modal de previsualización
+  const modal = document.createElement('div');
+  modal.id = 'preview-modal';
+  modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-background-dark rounded-2xl w-full max-w-6xl h-[90vh] shadow-2xl overflow-hidden flex flex-col">
+      <!-- Header del Modal -->
+      <div class="bg-gradient-to-r from-primary to-blue-600 p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
+            <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+          </svg>
+          <div>
+            <h3 class="text-lg font-bold">Guía de Ejercicios - Cálculo I</h3>
+            <p class="text-xs text-white/80">Vista Previa del Material</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="download-from-preview" class="p-2 hover:bg-white/20 rounded-lg transition-colors" title="Descargar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+              <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <button id="close-preview" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+              <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Contenido del Modal (Visor de PDF simulado) -->
+      <div class="flex-1 overflow-hidden bg-gray-100 dark:bg-gray-900 relative">
+        <!-- Barra de herramientas -->
+        <div class="absolute top-4 left-1/2 -translate-x-1/2 z-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg px-4 py-2 flex items-center gap-4">
+          <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors" title="Página anterior">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+              <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span id="current-page">1</span> / <span id="total-pages">15</span>
+          </span>
+          <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors" title="Página siguiente">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+              <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <div class="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+          <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors" title="Alejar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+              <path fill-rule="evenodd" d="M3.75 12a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">100%</span>
+          <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors" title="Acercar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+              <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Simulación de páginas del PDF -->
+        <div class="h-full overflow-y-auto p-8 flex justify-center">
+          <div class="space-y-8 max-w-4xl">
+            <!-- Página 1 -->
+            <div class="bg-white dark:bg-gray-800 shadow-2xl p-12 rounded-lg">
+              <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Guía de Ejercicios</h1>
+                <h2 class="text-2xl font-semibold text-primary mb-4">Cálculo I</h2>
+                <p class="text-gray-600 dark:text-gray-400">Universidad de Santiago de Chile</p>
+                <p class="text-gray-600 dark:text-gray-400">Facultad de Ciencias</p>
+              </div>
+              
+              <div class="mt-12 space-y-6">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">1. Límites</h3>
+                  <div class="space-y-3 text-gray-700 dark:text-gray-300">
+                    <p><strong>1.1.</strong> Calcule el siguiente límite:</p>
+                    <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg text-center">
+                      <p class="font-mono">lim (x → 2) (x² - 4) / (x - 2)</p>
+                    </div>
+                    <p><strong>Solución:</strong> Factorizando el numerador...</p>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500">
+                      <p class="font-mono">= lim (x → 2) (x + 2)(x - 2) / (x - 2)</p>
+                      <p class="font-mono">= lim (x → 2) (x + 2)</p>
+                      <p class="font-mono">= 4</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <p><strong>1.2.</strong> Determine si existe el límite:</p>
+                  <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg text-center">
+                    <p class="font-mono">lim (x → 0) sin(x) / x</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                Página 1 de 15
+              </div>
+            </div>
+            
+            <!-- Página 2 (vista parcial) -->
+            <div class="bg-white dark:bg-gray-800 shadow-2xl p-12 rounded-lg opacity-50">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">2. Derivadas</h3>
+              <p class="text-gray-700 dark:text-gray-300">Calcule las derivadas de las siguientes funciones...</p>
+              <div class="h-32 bg-gray-100 dark:bg-gray-900 rounded mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer del Modal -->
+      <div class="bg-gray-50 dark:bg-gray-800 p-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700">
+        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+          </svg>
+          <span>Esto es una vista previa. Descarga el archivo completo para acceder a todo el contenido.</span>
+        </div>
+        <button id="download-from-footer" class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+          </svg>
+          Descargar Completo
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Prevenir scroll del body cuando el modal está abierto
+  document.body.style.overflow = 'hidden';
+  
+  // Función para cerrar el modal y restaurar el scroll
+  function closeModal() {
+    document.body.style.overflow = '';
+    modal.remove();
+  }
+  
+  // Cerrar modal con el botón X
+  document.getElementById('close-preview').addEventListener('click', closeModal);
+  
+  // Cerrar al hacer click fuera del modal
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  // Cerrar con tecla ESC
+  document.addEventListener('keydown', function escapeHandler(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  });
+  
+  // Botones de descarga
+  document.getElementById('download-from-preview').addEventListener('click', () => {
+    alert('📥 Descargando: Guía de Ejercicios - Cálculo I.pdf');
+  });
+  
+  document.getElementById('download-from-footer').addEventListener('click', () => {
+    alert('📥 Descargando archivo completo...');
+  });
+});
+</script>
+
+<!-- Scripts de utilidades del sistema -->
+<script src="../js/toast.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/download-manager.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- Sistema Premium -->
+<script src="../js/premium-check.js"></script>
+
+</body></html>

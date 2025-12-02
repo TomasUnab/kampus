@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material de Ejemplo - Kampus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13a4ec">
+    
+    <!-- Sistemas KAMPUS -->
+    <script>window.KAMPUS_LOG_LEVEL = 'info';</script>
+    <script src="js/security-manager.js"></script>
+    <script src="js/session-manager.js"></script>
+    <script src="js/cache-manager.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/notification-system.js"></script>
+    <script src="js/comments-system.js"></script>
+    <script src="js/push-notifications.js"></script>
+    <script src="js/lazy-loader.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto p-4 sm:p-6">
+        <!-- Header del Material -->
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-4 sm:mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Apuntes de Cálculo II - Derivadas</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 mb-4">
+                <span>📚 Universidad de Chile</span>
+                <span>👤 Carlos Silva</span>
+                <span>📅 Subido hace 2 días</span>
+                <span>📥 342 descargas</span>
+            </div>
+            
+            <!-- Valoración actual -->
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+                <div class="flex items-center">
+                    <span class="text-yellow-400 text-lg sm:text-xl">★★★★☆</span>
+                    <span class="ml-2 font-bold text-sm sm:text-base">4.2</span>
+                    <span class="text-gray-500 ml-1 text-xs sm:text-sm">(18 valoraciones)</span>
+                </div>
+                <button onclick="window.CommentsSystem.showRatingModal('material_123')" 
+                        class="bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-600 text-sm sm:text-base w-full sm:w-auto">
+                    Valorar
+                </button>
+            </div>
+
+            <p class="text-gray-700 mb-4 text-sm sm:text-base">
+                Apuntes completos sobre derivadas, incluyendo reglas básicas, regla de la cadena, 
+                derivadas implícitas y aplicaciones. Material preparado para el curso de Cálculo II.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <button class="btn-responsive btn-primary">
+                    📥 Descargar PDF
+                </button>
+                <button class="btn-responsive bg-gray-200 text-gray-700 hover:bg-gray-300">
+                    👁️ Vista previa
+                </button>
+                <button class="btn-responsive bg-red-500 text-white hover:bg-red-600">
+                    🚨 Reportar
+                </button>
+            </div>
+        </div>
+
+        <!-- Sección de Comentarios y Valoraciones -->
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Comentarios y Valoraciones</h2>
+            
+            <!-- Container para el sistema de comentarios -->
+            <div data-comments-container data-material-id="material_123">
+                <!-- Los comentarios se cargarán aquí automáticamente -->
+            </div>
+        </div>
+
+        <!-- Sección de contenido lazy -->
+        <div class="mt-4 sm:mt-6 bg-white rounded-lg shadow-md p-4 sm:p-6">
+            <h3 class="text-lg sm:text-xl font-bold mb-4">Materiales Relacionados</h3>
+            <div data-lazy-content="materials" data-content-id="calculus">
+                <!-- Contenido se carga cuando sea visible -->
+            </div>
+        </div>
+
+        <!-- Botones de prueba -->
+        <div class="mt-4 sm:mt-6 bg-white rounded-lg shadow-md p-4 sm:p-6">
+            <h3 class="text-lg sm:text-xl font-bold mb-4">Pruebas del Sistema</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                <button onclick="testNotification()" 
+                        class="btn-responsive bg-purple-500 text-white hover:bg-purple-600">
+                    🔔 Probar Notificación
+                </button>
+                <button onclick="testPushSubscription()" 
+                        class="btn-responsive bg-indigo-500 text-white hover:bg-indigo-600">
+                    📱 Suscribir Push
+                </button>
+                <button onclick="showSecurityTest()" 
+                        class="btn-responsive bg-red-500 text-white hover:bg-red-600">
+                    🔐 Test Seguridad
+                </button>
+                <button onclick="showPerformanceReport()" 
+                        class="btn-responsive bg-green-500 text-white hover:bg-green-600">
+                    📊 Reporte Performance
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones de prueba
+        function testNotification() {
+            if (window.PushNotificationManager) {
+                window.PushNotificationManager.notifyNewComment(
+                    'Apuntes de Cálculo II', 
+                    'Usuario de Prueba'
+                );
+            }
+        }
+
+        async function testPushSubscription() {
+            try {
+                if (window.PushNotificationManager) {
+                    await window.PushNotificationManager.subscribeToPush();
+                    window.showToast?.('Suscrito a notificaciones push', 'success');
+                }
+            } catch (error) {
+                window.showToast?.('Error: ' + error.message, 'error');
+            }
+        }
+
+        function showSecurityTest() {
+            if (window.SecurityManager) {
+                const testData = { message: 'Datos de prueba', timestamp: Date.now() };
+                
+                window.SecurityManager.encrypt(testData).then(encrypted => {
+                    console.log('Datos encriptados:', encrypted);
+                    
+                    window.SecurityManager.decrypt(encrypted).then(decrypted => {
+                        console.log('Datos desencriptados:', decrypted);
+                        window.showToast?.('Test de seguridad completado - Ver consola', 'success');
+                    });
+                });
+            }
+        }
+
+        // Simular login para pruebas
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.SessionManager && !window.SessionManager.isLoggedIn()) {
+                // Crear usuario de prueba
+                const testUser = {
+                    email: 'test@kampus.com',
+                    password: 'Test123!',
+                    name: 'Usuario de Prueba',
+                    career: 'Ingeniería',
+                    university: 'Universidad de Chile'
+                };
+                
+                window.SessionManager.register(testUser);
+                window.SessionManager.login(testUser.email, testUser.password);
+                
+                window.showToast?.('Sesión de prueba iniciada', 'info');
+            }
+        });
+    </script>
+</body>
+</html>

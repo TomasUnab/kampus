@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAMPUS - Sistema de Materiales Universitarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13a4ec">
+    <meta name="description" content="Sistema completo para compartir, buscar y gestionar materiales académicos universitarios">
+    <style>
+        @media (max-width: 640px) {
+            .mobile-menu { display: none; }
+            .mobile-menu.active { display: block; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navegación móvil -->
+    <nav class="sm:hidden bg-white shadow-md">
+        <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 48 48">
+                        <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"/>
+                    </svg>
+                </div>
+                <span class="text-lg font-bold text-gray-800">KAMPUS</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu px-4 pb-4 border-t">
+            <a href="dashboard_principal/code.html" class="block py-2 text-gray-700 hover:text-blue-600">📚 Dashboard</a>
+            <a href="material-ejemplo.html" class="block py-2 text-gray-700 hover:text-blue-600">🧪 Demo</a>
+            <a href="#github" class="block py-2 text-gray-700 hover:text-blue-600">💻 GitHub</a>
+        </div>
+    </nav>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <!-- Header -->
+        <div class="text-center mb-8 sm:mb-12">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 48 48">
+                        <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800">KAMPUS</h1>
+            </div>
+            <p class="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 px-4">Sistema de Gestión de Materiales Universitarios</p>
+            <div class="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 px-4">
+                <span class="bg-green-100 text-green-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">✅ 100% Frontend</span>
+                <span class="bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">📱 PWA Ready</span>
+                <span class="bg-purple-100 text-purple-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">🔐 Seguro</span>
+                <span class="bg-yellow-100 text-yellow-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">🚀 Rápido</span>
+            </div>
+        </div>
+
+        <!-- Botones principales -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto mb-8 sm:mb-12">
+            <a href="dashboard_principal/code.html" 
+               class="bg-white rounded-xl shadow-lg p-6 sm:p-8 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+                <div class="text-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-blue-600 transition-colors">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v0H8v0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Dashboard Principal</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Explora materiales, busca por universidad y carrera</p>
+                </div>
+            </a>
+
+         
+        </div>
+
+        <!-- Características -->
+        <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6 sm:mb-8">🚀 Características Principales</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div class="text-center p-4">
+                    <div class="text-3xl sm:text-4xl mb-3">🔐</div>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Seguridad Avanzada</h4>
+                    <p class="text-xs sm:text-sm text-gray-600">Encriptación AES-GCM, validación robusta, anti-XSS</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="text-3xl sm:text-4xl mb-3">💬</div>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Sistema Social</h4>
+                    <p class="text-xs sm:text-sm text-gray-600">Comentarios, valoraciones, notificaciones push</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="text-3xl sm:text-4xl mb-3">📱</div>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">PWA Completa</h4>
+                    <p class="text-xs sm:text-sm text-gray-600">Instalable, funciona offline, cache inteligente</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="text-3xl sm:text-4xl mb-3">⚡</div>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Alto Rendimiento</h4>
+                    <p class="text-xs sm:text-sm text-gray-600">Lazy loading, virtual scrolling, optimizado</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- App Store Badges -->
+        <div class="text-center mb-8 sm:mb-12">
+            <div class="bg-gradient-to-r from-gray-900 to-black text-white rounded-xl p-6 sm:p-8">
+                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">📱 Próximamente en App Stores</h3>
+                <p class="text-gray-300 mb-6 text-sm sm:text-base">Mientras tanto, instala como PWA desde tu navegador</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <!-- App Store Badge -->
+                    <div class="bg-white text-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg border-2 border-gray-300 opacity-70 hover:opacity-80 transition-opacity">
+                        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                        <div class="text-left">
+                            <div class="text-xs text-gray-600">Próximamente en</div>
+                            <div class="text-lg font-bold">App Store</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Play Badge -->
+                    <div class="bg-white text-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg border-2 border-gray-300 opacity-70 hover:opacity-80 transition-opacity">
+                        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                        </svg>
+                        <div class="text-left">
+                            <div class="text-xs text-gray-600">Próximamente en</div>
+                            <div class="text-lg font-bold">Google Play</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-blue-600 rounded-lg">
+                    <p class="text-sm font-medium">💡 <strong>¡Instala ahora como PWA!</strong></p>
+                    <p class="text-xs mt-1 text-blue-100">En Chrome móvil: Menú → "Instalar app" | En Safari: Compartir → "Añadir a pantalla de inicio"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GitHub -->
+        <div class="text-center">
+            <div class="bg-gray-800 text-white rounded-xl p-6 sm:p-8">
+                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">🌟 Open Source en GitHub</h3>
+                <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Contribuye al proyecto, reporta bugs o sugiere mejoras</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                    <a href="https://github.com/tu-usuario/kampus" 
+                       class="bg-white text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors text-sm sm:text-base">
+                        📂 Ver en GitHub
+                    </a>
+                    <a href="https://github.com/tu-usuario/kampus/issues" 
+                       class="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold hover:bg-blue-700 transition-colors text-sm sm:text-base">
+                        🐛 Reportar Issue
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 sm:mt-12 text-gray-600 px-4">
+            <p class="text-sm sm:text-base">Hecho con ❤️ por el equipo KAMPUS</p>
+            <p class="text-xs sm:text-sm mt-2">MIT License - Libre para usar y modificar</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Menú móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
+        
+        // PWA Install prompt
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Mostrar botón de instalación
+            const installBtn = document.createElement('button');
+            installBtn.innerHTML = '📱 Instalar App';
+            installBtn.className = 'fixed bottom-4 right-4 bg-blue-500 text-white px-3 py-2 text-sm rounded-lg shadow-lg hover:bg-blue-600 transition-colors z-50';
+            installBtn.onclick = async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        installBtn.remove();
+                    }
+                    deferredPrompt = null;
+                }
+            };
+            document.body.appendChild(installBtn);
+        });
+        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobile-menu');
+            const nav = e.target.closest('nav');
+            if (!nav && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Registrar el service worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registrado:', reg))
+                    .catch(err => console.error('Error al registrar Service Worker:', err));
+            });
+        }
+    </script>
+</body>
+</html>

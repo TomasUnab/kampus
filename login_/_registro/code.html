@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kampus - Inicio de Sesión</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Sistemas KAMPUS -->
+<script src="../../js/session-manager.js"></script>
+<script src="../../js/cache-manager.js"></script>
+<script src="../../js/performance-optimizer.js"></script>
+<script src="../../js/notification-system.js"></script>
+<script src="../../js/moderation-system.js"></script>
+<script src="../../js/kampus-init.js"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex flex-col min-h-screen">
+<header class="w-full px-4 sm:px-10 py-3 border-b border-gray-200 dark:border-gray-700/50">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">Kampus</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="../../dashboard_principal/code.html">Inicio</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="../../resultados_de_búsqueda/code.html">Explorar</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="bg-primary/20 dark:bg-primary/30 text-primary font-bold px-4 py-2 rounded-lg text-sm hover:bg-primary/30 dark:hover:bg-primary/40 transition-colors" href="../../dashboard_principal/code.html">Acceder</a>
+</div>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="w-full max-w-md space-y-8 bg-white dark:bg-background-dark/50 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700/50">
+<div>
+                <h2 class="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+                        ¡Bienvenido a Kampus!
+                    </h2>
+<p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                        Organiza tus apuntes, colabora y accede a recursos.
+                    </p>
+</div>
+
+<!-- Pestañas Login/Registro -->
+<div class="flex border-b border-gray-200 dark:border-gray-700">
+<button id="tab-login" class="flex-1 py-2 px-4 text-center font-medium text-primary border-b-2 border-primary" onclick="switchTab('login')">
+                        Iniciar Sesión
+                    </button>
+<button id="tab-register" class="flex-1 py-2 px-4 text-center font-medium text-gray-500 dark:text-gray-400 hover:text-primary" onclick="switchTab('register')">
+                        Registrarse
+                    </button>
+</div>
+
+<!-- Formulario de Login -->
+<form id="login-form" action="#" class="mt-8 space-y-6" method="POST">
+<div class="space-y-4">
+<div>
+<label class="sr-only" for="login-email">Correo electrónico</label>
+<input autocomplete="email" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="login-email" name="email" placeholder="Correo electrónico" required="" type="email"/>
+</div>
+<div>
+<label class="sr-only" for="login-password">Contraseña</label>
+<input autocomplete="current-password" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="login-password" name="password" placeholder="Contraseña" required="" type="password"/>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+<label for="remember-me" class="ml-2 block text-sm text-gray-600 dark:text-gray-400">
+                                        Recordarme
+                                    </label>
+</div>
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-primary/80">
+                                        ¿Olvidaste tu contraseña?
+                                    </a>
+</div>
+</div>
+</div>
+<div>
+<button class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="submit">
+                                Iniciar Sesión
+                            </button>
+</div>
+</form>
+
+<!-- Formulario de Registro -->
+<form id="register-form" action="#" class="mt-8 space-y-6 hidden" method="POST">
+<div class="space-y-4">
+<div>
+<label class="sr-only" for="institutional-email">Correo institucional</label>
+<input autocomplete="email" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="institutional-email" name="email" placeholder="Correo institucional (opcional)" type="email"/>
+</div>
+<div>
+<button type="button" class="group relative w-full flex justify-center py-3 px-4 border border-gray-300 dark:border-gray-700 text-sm font-bold rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                Continuar con correo institucional
+                            </button>
+</div>
+</div>
+<div class="relative">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-2 bg-white dark:bg-background-dark/50 text-gray-500 dark:text-gray-400">
+                                O regístrate manualmente
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<label class="sr-only" for="name">Nombre</label>
+<input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="name" name="name" placeholder="Nombre" required="" type="text"/>
+</div>
+<div>
+<label class="sr-only" for="email-address">Correo electrónico</label>
+<input autocomplete="email" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="email-address" name="email" placeholder="Correo electrónico" required="" type="email"/>
+</div>
+<div>
+<label class="sr-only" for="password">Contraseña</label>
+<input autocomplete="current-password" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="password" name="password" placeholder="Contraseña" required="" type="password"/>
+</div>
+<div>
+<label class="sr-only" for="university">Universidad</label>
+<select class="form-select appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 text-gray-500 dark:text-gray-400 bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="university" name="university">
+<option>Universidad</option>
+<option>Universidad de Chile</option>
+<option>Pontificia Universidad Católica de Chile</option>
+</select>
+</div>
+<div>
+<label class="sr-only" for="career">Carrera</label>
+<select class="form-select appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 text-gray-500 dark:text-gray-400 bg-background-light dark:bg-gray-800 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="career" name="career">
+<option>Carrera</option>
+<option>Ingeniería Civil</option>
+<option>Derecho</option>
+</select>
+</div>
+</div>
+<div>
+<button class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="submit">
+                            Registrarse
+                        </button>
+</div>
+<div class="text-sm text-center">
+<p class="text-gray-600 dark:text-gray-400">
+                            ¿Ya tienes una cuenta?
+                            <a class="font-medium text-primary hover:text-primary/80 cursor-pointer" onclick="switchTab('login')">
+                                Inicia sesión
+                            </a>
+</p>
+</div>
+</form>
+</div>
+</main>
+</div>
+<script>
+    // ==========================================
+    // 🔐 SISTEMA DE LOGIN/REGISTRO CON KAMPUS
+    // ==========================================
+
+    // Verificar si ya está logueado
+    window.addEventListener('load', () => {
+        if (window.Kampus && window.Kampus.isLoggedIn()) {
+            // Ya está logueado, redirigir al dashboard
+            window.location.href = '../../dashboard_principal/code.html';
+        }
+    });
+
+    // ==========================================
+    // CAMBIO DE PESTAÑAS
+    // ==========================================
+    
+    function switchTab(tab) {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const loginTab = document.getElementById('tab-login');
+        const registerTab = document.getElementById('tab-register');
+
+        if (tab === 'login') {
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            loginTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            loginTab.classList.remove('text-gray-500', 'dark:text-gray-400');
+            registerTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            registerTab.classList.add('text-gray-500', 'dark:text-gray-400');
+        } else {
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            registerTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            registerTab.classList.remove('text-gray-500', 'dark:text-gray-400');
+            loginTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            loginTab.classList.add('text-gray-500', 'dark:text-gray-400');
+        }
+    }
+
+    // ==========================================
+    // MANEJO DE LOGIN
+    // ==========================================
+    
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        // Validaciones básicas
+        if (!email || !password) {
+            if (window.Kampus) {
+                window.Kampus.notify('Por favor completa todos los campos', 'error');
+            } else {
+                alert('Por favor completa todos los campos');
+            }
+            return;
+        }
+
+        // Intentar login con SessionManager
+        if (window.SessionManager) {
+            const result = window.SessionManager.login(email, password);
+            
+            if (result.success) {
+                // Login exitoso
+                if (window.Kampus) {
+                    window.Kampus.notify('¡Bienvenido de vuelta! 🎉', 'success');
+                }
+                
+                // Pequeño delay para que se vea la notificación
+                setTimeout(() => {
+                    window.location.href = '../../dashboard_principal/code.html';
+                }, 500);
+            } else {
+                // Login fallido
+                if (window.Kampus) {
+                    window.Kampus.notify(result.error || 'Email o contraseña incorrectos', 'error');
+                } else {
+                    alert(result.error || 'Email o contraseña incorrectos');
+                }
+            }
+        } else {
+            console.error('SessionManager no está disponible');
+            alert('Error: Sistema de sesiones no disponible');
+        }
+    });
+
+    // ==========================================
+    // MANEJO DE REGISTRO
+    // ==========================================
+    
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email-address').value;
+        const password = document.getElementById('password').value;
+        const university = document.getElementById('university').value;
+        const career = document.getElementById('career').value;
+
+        // Validaciones
+        if (!name || !email || !password) {
+            if (window.Kampus) {
+                window.Kampus.notify('Por favor completa los campos requeridos', 'error');
+            } else {
+                alert('Por favor completa los campos requeridos');
+            }
+            return;
+        }
+
+        if (password.length < 6) {
+            if (window.Kampus) {
+                window.Kampus.notify('La contraseña debe tener al menos 6 caracteres', 'error');
+            } else {
+                alert('La contraseña debe tener al menos 6 caracteres');
+            }
+            return;
+        }
+
+        if (university === 'Universidad' || career === 'Carrera') {
+            if (window.Kampus) {
+                window.Kampus.notify('Por favor selecciona tu universidad y carrera', 'warning');
+            } else {
+                alert('Por favor selecciona tu universidad y carrera');
+            }
+            return;
+        }
+
+        // Registro con SessionManager
+        if (window.SessionManager) {
+            const result = window.SessionManager.register({
+                name: name,
+                email: email,
+                password: password,
+                university: university,
+                career: career
+            });
+            
+            if (result.success) {
+                // Registro exitoso
+                if (window.Kampus) {
+                    window.Kampus.notify('¡Cuenta creada exitosamente! 🎉', 'success');
+                }
+                
+                // Auto-login después del registro
+                setTimeout(() => {
+                    const loginResult = window.SessionManager.login(email, password);
+                    if (loginResult.success) {
+                        window.location.href = '../../dashboard_principal/code.html';
+                    }
+                }, 500);
+            } else {
+                // Registro fallido
+                if (window.Kampus) {
+                    window.Kampus.notify(result.error || 'Error al crear la cuenta', 'error');
+                } else {
+                    alert(result.error || 'Error al crear la cuenta');
+                }
+            }
+        } else {
+            console.error('SessionManager no está disponible');
+            alert('Error: Sistema de sesiones no disponible');
+        }
+    });
+
+    // ==========================================
+    // DEMO: Crear usuarios de prueba si no existen
+    // ==========================================
+    
+    window.addEventListener('load', () => {
+        if (window.SessionManager) {
+            const users = window.SessionManager.getAllUsers();
+            
+            // Si no hay usuarios, crear usuarios de demo
+            if (users.length === 0) {
+                // 1. Crear usuario ADMINISTRADOR
+                window.SessionManager.register({
+                    name: 'Admin Kampus',
+                    email: 'admin@kampus.com',
+                    password: 'admin123',
+                    university: 'Universidad de Chile',
+                    career: 'Administración de Sistemas',
+                    role: 'admin',
+                    isAdmin: true,
+                    isPremium: true
+                });
+
+                // 2. Crear usuario MODERADOR
+                window.SessionManager.register({
+                    name: 'Moderador Kampus',
+                    email: 'moderador@kampus.com',
+                    password: 'mod123',
+                    university: 'Universidad de Chile',
+                    career: 'Moderación de Contenidos',
+                    role: 'moderator',
+                    isPremium: true
+                });
+
+                // 3. Crear usuario NORMAL
+                window.SessionManager.register({
+                    name: 'Usuario Demo',
+                    email: 'demo@kampus.com',
+                    password: 'demo123',
+                    university: 'Universidad de Chile',
+                    career: 'Ingeniería Civil',
+                    role: 'user',
+                    isPremium: false
+                });
+                
+                console.log('═══════════════════════════════════════════');
+                console.log('� USUARIOS DE PRUEBA CREADOS');
+                console.log('═══════════════════════════════════════════');
+                console.log('');
+                console.log('🔴 ADMINISTRADOR:');
+                console.log('   Email: admin@kampus.com');
+                console.log('   Password: admin123');
+                console.log('   Permisos: ✅ TODOS');
+                console.log('');
+                console.log('🟡 MODERADOR:');
+                console.log('   Email: moderador@kampus.com');
+                console.log('   Password: mod123');
+                console.log('   Permisos: Moderar contenido, banear usuarios');
+                console.log('');
+                console.log('🟢 USUARIO NORMAL:');
+                console.log('   Email: demo@kampus.com');
+                console.log('   Password: demo123');
+                console.log('   Permisos: Ver, subir, comentar, descargar');
+                console.log('');
+                console.log('═══════════════════════════════════════════');
+            }
+        }
+    });
+</script>
+</body></html>

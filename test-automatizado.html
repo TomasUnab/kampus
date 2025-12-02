@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing Automatizado - KAMPUS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Sistemas KAMPUS -->
+  <script src="js/session-manager.js"></script>
+  <script src="js/cache-manager.js"></script>
+  <script src="js/performance-optimizer.js"></script>
+  <script src="js/notification-system.js"></script>
+  <script src="js/moderation-system.js"></script>
+  <script src="js/kampus-init.js"></script>
+</head>
+<body class="bg-gray-50">
+
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">🧪 Testing Automatizado - KAMPUS</h1>
+      <p class="text-gray-600">Ejecuta todas las pruebas para verificar que los sistemas funcionen correctamente</p>
+    </div>
+
+    <!-- Controles -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <div class="flex gap-4">
+        <button onclick="runAllTests()" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium">
+          ▶️ Ejecutar Todas las Pruebas
+        </button>
+        <button onclick="clearResults()" class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium">
+          🗑️ Limpiar Resultados
+        </button>
+        <button onclick="generateReport()" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
+          📊 Generar Reporte
+        </button>
+      </div>
+      
+      <!-- Progreso -->
+      <div class="mt-4">
+        <div class="flex justify-between text-sm text-gray-600 mb-1">
+          <span id="progressText">Listo para empezar</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-3">
+          <div id="progressBar" class="bg-purple-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="grid grid-cols-1 gap-4" id="testResults">
+      <!-- Se llenarán dinámicamente -->
+    </div>
+
+    <!-- Resumen Final -->
+    <div id="summarySection" class="hidden bg-white rounded-lg shadow-lg p-6 mt-6">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">📊 Resumen de Resultados</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="text-center p-4 bg-green-50 rounded-lg">
+          <div class="text-3xl font-bold text-green-600" id="passedCount">0</div>
+          <div class="text-sm text-gray-600">Pruebas Exitosas</div>
+        </div>
+        <div class="text-center p-4 bg-red-50 rounded-lg">
+          <div class="text-3xl font-bold text-red-600" id="failedCount">0</div>
+          <div class="text-sm text-gray-600">Pruebas Fallidas</div>
+        </div>
+        <div class="text-center p-4 bg-blue-50 rounded-lg">
+          <div class="text-3xl font-bold text-blue-600" id="totalTime">0s</div>
+          <div class="text-sm text-gray-600">Tiempo Total</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ==========================================
+    // SISTEMA DE TESTING
+    // ==========================================
+
+    const tests = [];
+    let currentTest = 0;
+    let passedTests = 0;
+    let failedTests = 0;
+    let startTime = 0;
+
+    // ==========================================
+    // DEFINICIÓN DE TESTS
+    // ==========================================
+
+    // Test 1: Verificar carga de sistemas
+    tests.push({
+      name: 'Verificar Carga de Sistemas',
+      category: 'Inicialización',
+      test: async () => {
+        const systems = {
+          'SessionManager': window.SessionManager,
+          'CacheManager': window.CacheManager,
+          'PerformanceOptimizer': window.PerformanceOptimizer,
+          'NotificationSystem': window.NotificationSystem,
+          'ModerationSystem': window.ModerationSystem,
+          'Kampus': window.Kampus
+        };
+
+        const missing = Object.entries(systems)
+          .filter(([name, obj]) => !obj)
+          .map(([name]) => name);
+
+        if (missing.length > 0) {
+          throw new Error('Sistemas no cargados: ' + missing.join(', '));
+        }
+
+        return { sistemas: Object.keys(systems).length };
+      }
+    });
+
+    // Test 2: Registro de usuario
+    tests.push({
+      name: 'Registro de Usuario',
+      category: 'Sesiones',
+      test: async () => {
+        const userData = {
+          name: 'Test User',
+          email: 'test_' + Date.now() + '@kampus.com',
+          password: 'Test123!',
+          university: 'Universidad de Prueba',
+          career: 'Ingeniería de Software'
+        };
+
+        const result = window.SessionManager.register(userData);
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Error en registro');
+        }
+
+        return { userId: result.userId };
+      }
+    });
+
+    // Test 3: Login de usuario
+    tests.push({
+      name: 'Login de Usuario',
+      category: 'Sesiones',
+      test: async () => {
+        // Primero obtener usuarios desencriptados
+        const users = window.SessionManager.getAllUsers();
+        const lastUser = users[users.length - 1];
+
+        if (!lastUser) {
+          throw new Error('No hay usuarios para probar login');
+        }
+
+        const result = window.SessionManager.login(lastUser.email, 'Test123!');
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Error en login');
+        }
+
+        const currentUser = window.Kampus.getCurrentUser();
+        if (!currentUser) {
+          throw new Error('Usuario no logueado correctamente');
+        }
+
+        return { 
+          sessionId: result.sessionId,
+          userName: currentUser.name
+        };
+      }
+    });
+
+    // Test 4: Verificar sesión activa
+    tests.push({
+      name: 'Verificar Sesión Activa',
+      category: 'Sesiones',
+      test: async () => {
+        const isLoggedIn = window.Kampus.isLoggedIn();
+        const currentUser = window.Kampus.getCurrentUser();
+
+        if (!isLoggedIn || !currentUser) {
+          throw new Error('No hay sesión activa');
+        }
+
+        return { 
+          userId: currentUser.id,
+          userName: currentUser.name,
+          isPremium: currentUser.isPremium || false
+        };
+      }
+    });
+
+    // Test 5: Guardar en cache
+    tests.push({
+      name: 'Guardar en Cache',
+      category: 'Cache',
+      test: async () => {
+        const testData = {
+          id: 'test_' + Date.now(),
+          message: 'Datos de prueba',
+          timestamp: Date.now()
+        };
+
+        const saved = window.Kampus.cache.set('test_cache', testData, {
+          ttl: 60000,
+          priority: 'normal'
+        });
+
+        if (!saved) {
+          throw new Error('No se pudo guardar en cache');
+        }
+
+        return { cacheKey: 'test_cache' };
+      }
+    });
+
+    // Test 6: Recuperar de cache
+    tests.push({
+      name: 'Recuperar de Cache',
+      category: 'Cache',
+      test: async () => {
+        const retrieved = window.Kampus.cache.get('test_cache');
+
+        if (!retrieved) {
+          throw new Error('No se pudo recuperar de cache');
+        }
+
+        if (!retrieved.message || retrieved.message !== 'Datos de prueba') {
+          throw new Error('Datos corruptos en cache');
+        }
+
+        return { message: retrieved.message };
+      }
+    });
+
+    // Test 7: Estadísticas de cache
+    tests.push({
+      name: 'Estadísticas de Cache',
+      category: 'Cache',
+      test: async () => {
+        const stats = window.CacheManager.getStats();
+
+        if (!stats || typeof stats.totalSize !== 'number') {
+          throw new Error('No se pudieron obtener estadísticas');
+        }
+
+        return {
+          size: Math.round(stats.totalSize / 1024) + ' KB',
+          entries: stats.totalEntries
+        };
+      }
+    });
+
+    // Test 8: Notificación Toast
+    tests.push({
+      name: 'Notificación Toast',
+      category: 'Notificaciones',
+      test: async () => {
+        window.Kampus.notify('Test de notificación', 'info');
+        
+        // Esperar un momento para que se muestre
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        return { type: 'toast', status: 'displayed' };
+      }
+    });
+
+    // Test 9: Notificación Persistente
+    tests.push({
+      name: 'Notificación Persistente',
+      category: 'Notificaciones',
+      test: async () => {
+        window.NotificationSystem.notify({
+          title: 'Test Notification',
+          message: 'Prueba de notificación persistente',
+          type: 'success'
+        });
+
+        const notifications = window.NotificationSystem.getAll();
+        
+        if (notifications.length === 0) {
+          throw new Error('No se creó la notificación');
+        }
+
+        return { 
+          notificationId: notifications[notifications.length - 1].id,
+          total: notifications.length
+        };
+      }
+    });
+
+    // Test 10: Contador de no leídas
+    tests.push({
+      name: 'Contador de No Leídas',
+      category: 'Notificaciones',
+      test: async () => {
+        const unread = window.NotificationSystem.getUnread();
+        const unreadCount = unread.length;
+
+        if (typeof unreadCount !== 'number') {
+          throw new Error('Contador inválido');
+        }
+
+        return { unread: unreadCount };
+      }
+    });
+
+    // Test 11: Análisis de contenido limpio
+    tests.push({
+      name: 'Análisis de Contenido Limpio',
+      category: 'Moderación',
+      test: async () => {
+        const currentUser = window.Kampus.getCurrentUser();
+        if (!currentUser) {
+          throw new Error('No hay usuario logueado');
+        }
+
+        const result = window.Kampus.moderateContent({
+          text: 'Este es un material educativo sobre matemáticas',
+          userId: currentUser.id
+        });
+
+        if (!result.approved) {
+          throw new Error('Contenido limpio fue rechazado');
+        }
+
+        return { 
+          approved: result.approved,
+          score: result.analysis.score
+        };
+      }
+    });
+
+    // Test 12: Detección de spam
+    tests.push({
+      name: 'Detección de Spam',
+      category: 'Moderación',
+      test: async () => {
+        const currentUser = window.Kampus.getCurrentUser();
+        if (!currentUser) {
+          throw new Error('No hay usuario logueado');
+        }
+
+        const result = window.Kampus.moderateContent({
+          text: 'CLICK HERE FREE MONEY spam spam spam CLICK HERE',
+          userId: currentUser.id
+        });
+
+        if (result.approved && !result.requiresReview) {
+          throw new Error('Spam no fue detectado');
+        }
+
+        return { 
+          blocked: result.blocked || false,
+          requiresReview: result.requiresReview || false,
+          score: result.analysis.score
+        };
+      }
+    });
+
+    // Test 13: Validación de archivo
+    tests.push({
+      name: 'Validación de Archivo',
+      category: 'Moderación',
+      test: async () => {
+        // Simular archivo válido
+        const validFile = new File(['test'], 'test.pdf', { type: 'application/pdf' });
+        const validation = window.ModerationSystem.validateFile(validFile);
+
+        if (!validation.valid) {
+          throw new Error('Archivo válido fue rechazado: ' + validation.issues.join(', '));
+        }
+
+        return { valid: validation.valid };
+      }
+    });
+
+    // Test 14: Rate limiting
+    tests.push({
+      name: 'Rate Limiting',
+      category: 'Moderación',
+      test: async () => {
+        const user = window.Kampus.getCurrentUser();
+        if (!user) {
+          throw new Error('No hay usuario logueado');
+        }
+        
+        // Hacer 3 acciones rápidas
+        const results = [];
+        for (let i = 0; i < 3; i++) {
+          const limit = window.ModerationSystem.checkRateLimit(user.id, 'upload', 5, 60000);
+          results.push(limit.exceeded);
+        }
+
+        // Ninguna debería exceder el límite aún (límite es 5)
+        if (results.some(exceeded => exceeded)) {
+          throw new Error('Rate limit activado prematuramente');
+        }
+
+        return { 
+          checks: results.length,
+          allPassed: true
+        };
+      }
+    });
+
+    // Test 15: Performance metrics
+    tests.push({
+      name: 'Métricas de Rendimiento',
+      category: 'Performance',
+      test: async () => {
+        const metrics = window.PerformanceOptimizer.metrics;
+
+        if (!metrics || typeof metrics.pageLoadTime !== 'number') {
+          throw new Error('No se pudieron obtener métricas');
+        }
+
+        return {
+          loadTime: metrics.pageLoadTime + 'ms',
+          memory: Math.round(metrics.memoryUsage) + 'MB'
+        };
+      }
+    });
+
+    // Test 16: Lazy loading setup
+    tests.push({
+      name: 'Lazy Loading',
+      category: 'Performance',
+      test: async () => {
+        // Verificar que el optimizer exista
+        if (!window.PerformanceOptimizer) {
+          throw new Error('PerformanceOptimizer no está disponible');
+        }
+
+        return { status: 'configured', observers: window.PerformanceOptimizer.observers.length };
+      }
+    });
+
+    // Test 17: Actualizar usuario
+    tests.push({
+      name: 'Actualizar Usuario',
+      category: 'Sesiones',
+      test: async () => {
+        const user = window.Kampus.getCurrentUser();
+        if (!user) {
+          throw new Error('No hay usuario logueado');
+        }
+        
+        const originalName = user.name;
+        
+        const result = window.SessionManager.updateCurrentUser({ name: 'Updated Name' });
+        
+        if (!result.success) {
+          throw new Error('No se pudo actualizar usuario');
+        }
+
+        const updated = window.Kampus.getCurrentUser();
+        
+        if (updated.name !== 'Updated Name') {
+          throw new Error('Usuario no se actualizó correctamente');
+        }
+
+        // Restaurar nombre original
+        window.SessionManager.updateCurrentUser({ name: originalName });
+
+        return { 
+          originalName,
+          updated: true
+        };
+      }
+    });
+
+    // Test 18: Crear reporte
+    tests.push({
+      name: 'Crear Reporte',
+      category: 'Moderación',
+      test: async () => {
+        const currentUser = window.Kampus.getCurrentUser();
+        if (!currentUser) {
+          throw new Error('No hay usuario logueado');
+        }
+
+        const report = window.ModerationSystem.report({
+          itemId: 'material_123',
+          itemType: 'material',
+          reason: 'spam',
+          description: 'Contenido duplicado',
+          reportedBy: currentUser.id
+        });
+
+        if (!report || !report.id) {
+          throw new Error('No se pudo crear el reporte');
+        }
+
+        return { 
+          reportId: report.id,
+          severity: report.severity
+        };
+      }
+    });
+
+    // Test 19: Obtener reportes
+    tests.push({
+      name: 'Obtener Reportes',
+      category: 'Moderación',
+      test: async () => {
+        const reports = window.ModerationSystem.getReports({ status: 'pending' });
+
+        if (!Array.isArray(reports)) {
+          throw new Error('No se pudieron obtener reportes');
+        }
+
+        return { 
+          total: reports.length,
+          pending: reports.filter(r => r.status === 'pending').length
+        };
+      }
+    });
+
+    // Test 20: Logout
+    tests.push({
+      name: 'Cerrar Sesión',
+      category: 'Sesiones',
+      test: async () => {
+        window.SessionManager.logout();
+
+        const isLoggedIn = window.Kampus.isLoggedIn();
+        
+        if (isLoggedIn) {
+          throw new Error('La sesión no se cerró correctamente');
+        }
+
+        return { loggedOut: true };
+      }
+    });
+
+    // ==========================================
+    // EJECUCIÓN DE TESTS
+    // ==========================================
+
+    async function runAllTests() {
+      clearResults();
+      
+      passedTests = 0;
+      failedTests = 0;
+      currentTest = 0;
+      startTime = Date.now();
+
+      document.getElementById('summarySection').classList.add('hidden');
+
+      for (const test of tests) {
+        await runTest(test);
+        currentTest++;
+        updateProgress();
+      }
+
+      showSummary();
+    }
+
+    async function runTest(test) {
+      const container = document.getElementById('testResults');
+      const testId = 'test_' + currentTest;
+
+      // Crear card de test
+      const card = document.createElement('div');
+      card.id = testId;
+      card.className = 'bg-white rounded-lg shadow p-4';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <div class="spinner"></div>
+              <span class="text-sm text-gray-500">${test.category}</span>
+            </div>
+            <h3 class="font-medium text-gray-900 mt-1">${test.name}</h3>
+          </div>
+          <div class="status">⏳</div>
+        </div>
+        <div class="result hidden mt-3 p-3 bg-gray-50 rounded text-sm"></div>
+      `;
+      container.appendChild(card);
+
+      // Ejecutar test
+      try {
+        const result = await test.test();
+        
+        // Test pasado
+        passedTests++;
+        card.className = 'bg-white rounded-lg shadow p-4 border-l-4 border-green-500';
+        card.querySelector('.status').textContent = '✅';
+        card.querySelector('.spinner').remove();
+        
+        const resultDiv = card.querySelector('.result');
+        resultDiv.classList.remove('hidden');
+        resultDiv.className = 'result mt-3 p-3 bg-green-50 rounded text-sm text-green-800';
+        resultDiv.innerHTML = '<strong>✓ PASADO</strong><br>' + JSON.stringify(result, null, 2);
+
+      } catch (error) {
+        // Test fallado
+        failedTests++;
+        card.className = 'bg-white rounded-lg shadow p-4 border-l-4 border-red-500';
+        card.querySelector('.status').textContent = '❌';
+        card.querySelector('.spinner').remove();
+        
+        const resultDiv = card.querySelector('.result');
+        resultDiv.classList.remove('hidden');
+        resultDiv.className = 'result mt-3 p-3 bg-red-50 rounded text-sm text-red-800';
+        resultDiv.innerHTML = '<strong>✗ FALLIDO</strong><br>' + error.message;
+      }
+
+      // Pequeña pausa para que se vea la animación
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    function updateProgress() {
+      const percent = Math.round((currentTest / tests.length) * 100);
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('progressPercent').textContent = percent + '%';
+      document.getElementById('progressText').textContent = `Ejecutando test ${currentTest} de ${tests.length}`;
+    }
+
+    function showSummary() {
+      const totalTime = ((Date.now() - startTime) / 1000).toFixed(2);
+      
+      document.getElementById('passedCount').textContent = passedTests;
+      document.getElementById('failedCount').textContent = failedTests;
+      document.getElementById('totalTime').textContent = totalTime + 's';
+      document.getElementById('summarySection').classList.remove('hidden');
+
+      // Mensaje final
+      if (failedTests === 0) {
+        if (window.Kampus && window.Kampus.notify) {
+          window.Kampus.notify('¡Todos los tests pasaron! 🎉', 'success');
+        }
+      } else {
+        if (window.Kampus && window.Kampus.notify) {
+          window.Kampus.notify(`${failedTests} tests fallaron`, 'error');
+        }
+      }
+
+      document.getElementById('progressText').textContent = 'Tests completados';
+    }
+
+    function clearResults() {
+      document.getElementById('testResults').innerHTML = '';
+      document.getElementById('progressBar').style.width = '0%';
+      document.getElementById('progressPercent').textContent = '0%';
+      document.getElementById('progressText').textContent = 'Listo para empezar';
+      document.getElementById('summarySection').classList.add('hidden');
+    }
+
+    function generateReport() {
+      const report = {
+        timestamp: new Date().toISOString(),
+        totalTests: tests.length,
+        passed: passedTests,
+        failed: failedTests,
+        successRate: ((passedTests / tests.length) * 100).toFixed(2) + '%',
+        duration: ((Date.now() - startTime) / 1000).toFixed(2) + 's',
+        browser: navigator.userAgent,
+        systems: {
+          SessionManager: !!window.SessionManager,
+          CacheManager: !!window.CacheManager,
+          PerformanceOptimizer: !!window.PerformanceOptimizer,
+          NotificationSystem: !!window.NotificationSystem,
+          ModerationSystem: !!window.ModerationSystem
+        }
+      };
+
+      console.log('📊 REPORTE DE TESTING');
+      console.table(report);
+      
+      // Descargar JSON
+      const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kampus-test-report-' + Date.now() + '.json';
+      a.click();
+      
+      if (window.Kampus && window.Kampus.notify) {
+        window.Kampus.notify('Reporte descargado', 'success');
+      }
+    }
+  </script>
+
+  <style>
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #e5e7eb;
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+</body>
+</html>

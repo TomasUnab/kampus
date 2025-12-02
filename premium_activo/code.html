@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Kampus Premium - Funciones Activas</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "premium-gold": "#fbbf24",
+            "premium-dark": "#d97706",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans"]
+          },
+        },
+      },
+    }
+</script>
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes shine {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  .shine {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background-size: 200% 100%;
+    animation: shine 2s infinite;
+  }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="min-h-screen flex flex-col">
+
+<!-- Header Premium -->
+<header class="sticky top-0 z-20 bg-gradient-to-r from-premium-gold via-yellow-500 to-premium-gold backdrop-blur-sm border-b-2 border-premium-dark shadow-xl">
+  <div class="container mx-auto px-6">
+    <div class="flex items-center justify-center h-16 gap-6">
+      
+      <!-- Logo y Nombre -->
+      <div class="flex items-center gap-3">
+        <a class="flex items-center gap-2 text-gray-900" href="../dashboard_principal/code.html">
+          <svg class="h-6 w-6 text-premium-dark" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+          </svg>
+          <h1 class="text-xl font-bold text-gray-900">Kampus</h1>
+        </a>
+      </div>
+
+      <!-- Badge Premium -->
+      <div class="bg-gradient-to-r from-orange-500 to-yellow-500 px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 border-2 border-orange-600">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+          <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-xs font-bold text-white">Premium</span>
+      </div>
+
+      <!-- Navegación -->
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="text-sm font-semibold text-gray-900 hover:text-premium-dark transition-colors" href="../dashboard_principal/code.html">Inicio</a>
+        <a class="text-sm font-semibold text-gray-900 hover:text-premium-dark transition-colors" href="../resultados_de_búsqueda/code.html">Explorar</a>
+        <a class="text-sm font-semibold text-gray-900 hover:text-premium-dark transition-colors" href="../mis_materiales/code.html">Mis materiales</a>
+      </nav>
+
+      <!-- Avatar -->
+      <div class="flex items-center gap-4">
+        <div data-header-avatar class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 cursor-pointer ring-2 ring-premium-dark hover:ring-orange-600 transition-all" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section Premium -->
+<section class="relative bg-gradient-to-br from-premium-gold via-yellow-400 to-amber-500 py-10 overflow-hidden">
+<!-- Efectos de fondo -->
+<div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+<div class="absolute top-10 left-10 w-72 h-72 bg-white/20 rounded-full blur-3xl animate-float"></div>
+<div class="absolute bottom-10 right-10 w-96 h-96 bg-premium-dark/20 rounded-full blur-3xl" style="animation: float 4s ease-in-out infinite;"></div>
+
+<div class="container mx-auto px-6 relative z-10">
+<div class="text-center max-w-4xl mx-auto">
+<!-- Icono animado -->
+<div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-2xl mb-4 animate-float">
+<span class="material-symbols-outlined text-premium-dark" style="font-size: 48px;">workspace_premium</span>
+</div>
+
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+¡Bienvenido a <span class="text-premium-dark">Premium</span>!
+</h1>
+<p class="text-base text-gray-800 mb-4 font-medium">
+Ya tienes acceso completo a todas las funciones exclusivas de Kampus Premium
+</p>
+
+<!-- Info de suscripción -->
+<div class="inline-flex items-center gap-3 bg-white/90 backdrop-blur rounded-full px-5 py-2 shadow-lg">
+<span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+<span class="font-semibold text-gray-900 text-sm">Plan activo hasta: <span class="text-premium-dark">10 Noviembre 2025</span></span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Funciones Premium Activas -->
+<section class="py-12 bg-white dark:bg-background-dark">
+<div class="container mx-auto px-6">
+<div class="text-center mb-8">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+Tus Funciones <span class="text-premium-gold">Premium</span> Activas
+</h2>
+<p class="text-base text-gray-600 dark:text-gray-400">
+Aprovecha al máximo todas estas ventajas exclusivas
+</p>
+</div>
+
+<!-- Grid de Funciones -->
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+
+<!-- Función 1: Descargas Ilimitadas -->
+<div class="group relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3 border-2 border-blue-200 dark:border-blue-700 hover:shadow-2xl hover:scale-105 hover:border-blue-400 transition-all duration-300 overflow-hidden">
+  <!-- Efecto de brillo animado -->
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">download</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors">
+      Descargas Ilimitadas
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Descarga todos los materiales que necesites sin límites ni restricciones.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Sin límite de descargas</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Acceso prioritario</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Formatos completos</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+      Explorar Materiales
+    </button>
+  </div>
+</div>
+
+<!-- Función 2: IA Resúmenes -->
+<div class="group relative bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-3 border-2 border-purple-200 dark:border-purple-700 hover:shadow-2xl hover:scale-105 hover:border-purple-400 transition-all duration-300 overflow-hidden">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-purple-500 to-purple-700 rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">psychology</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-purple-600 transition-colors">
+      Resúmenes por IA
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Genera resúmenes inteligentes de cualquier material con un solo clic.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">IA avanzada GPT-4</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Resúmenes personalizados</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Puntos clave destacados</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+      Probar IA Ahora
+    </button>
+  </div>
+</div>
+
+<!-- Función 3: Sin Anuncios -->
+<div class="group relative bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-3 border-2 border-green-200 dark:border-green-700 hover:shadow-2xl hover:scale-105 hover:border-green-400 transition-all duration-300 overflow-hidden">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-green-500 to-green-700 rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">block</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 transition-colors">
+      Experiencia Sin Anuncios
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Navega sin interrupciones. Cero anuncios, 100% enfoque en tus estudios.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Sin publicidad</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Navegación fluida</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Mayor velocidad</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+      Disfrutar Ahora
+    </button>
+  </div>
+</div>
+
+<!-- Función 4: Almacenamiento Ampliado -->
+<div class="group relative bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg p-3 border-2 border-orange-200 dark:border-orange-700 hover:shadow-2xl hover:scale-105 hover:border-orange-400 transition-all duration-300 overflow-hidden">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-orange-500 to-orange-700 rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">cloud_upload</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-orange-600 transition-colors">
+      Almacenamiento Ilimitado
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Sube todos tus materiales sin preocuparte por el espacio disponible.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Espacio ilimitado</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Archivos hasta 500MB</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Backup automático</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+      Subir Material
+    </button>
+  </div>
+</div>
+
+<!-- Función 5: Badge Premium -->
+<div class="group relative bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 rounded-lg p-3 border-2 border-yellow-200 dark:border-yellow-700 hover:shadow-2xl hover:scale-105 hover:border-yellow-400 transition-all duration-300 overflow-hidden">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-premium-gold to-premium-dark rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">workspace_premium</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-premium-dark transition-colors">
+      Badge Premium Exclusivo
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Destaca en la comunidad con tu insignia Premium visible en todo el sitio.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-5 h-5 bg-premium-gold rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Perfil destacado</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-5 h-5 bg-premium-gold rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Reconocimiento especial</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-5 h-5 bg-premium-gold rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Acceso VIP</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-gradient-to-r from-premium-gold to-premium-dark hover:from-premium-dark hover:to-premium-gold text-white font-semibold rounded-lg transition-all shadow-lg opacity-0 group-hover:opacity-100">
+      Ver Mi Perfil
+    </button>
+  </div>
+</div>
+
+<!-- Función 6: Soporte Prioritario -->
+<div class="group relative bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 rounded-lg p-3 border-2 border-red-200 dark:border-red-700 hover:shadow-2xl hover:scale-105 hover:border-red-400 transition-all duration-300 overflow-hidden">
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+  </div>
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-2">
+      <div class="bg-gradient-to-br from-red-500 to-red-700 rounded p-1.5 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+        <span class="material-symbols-outlined text-white text-2xl">support_agent</span>
+      </div>
+      <div class="flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+    
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-red-600 transition-colors">
+      Soporte Prioritario 24/7
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-1.5 text-xs leading-snug">
+      Recibe ayuda inmediata con un equipo dedicado disponible siempre.
+    </p>
+    
+    <div class="space-y-1.5">
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Atención 24/7</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Respuesta en 1 hora</span>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-800/50 rounded-md p-1.5">
+        <div class="flex-shrink-0 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center">
+          <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <span class="font-medium">Canal exclusivo</span>
+      </div>
+    </div>
+    
+    <button class="mt-3 w-full py-1 text-xs bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+      Contactar Soporte
+    </button>
+  </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Estadísticas de Uso Premium -->
+<section class="py-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-background-dark">
+<div class="container mx-auto px-6">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+Tu Actividad <span class="text-premium-gold">Premium</span>
+</h2>
+<p class="text-sm text-gray-600 dark:text-gray-400">
+Estadísticas de este mes
+</p>
+</div>
+
+<!-- Grid de Estadísticas -->
+<div class="grid md:grid-cols-4 gap-4">
+<!-- Stat 1 -->
+<div class="bg-white dark:bg-background-dark rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-800 hover:shadow-xl transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-blue-600 text-3xl">download</span>
+<span class="text-xs font-semibold text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 rounded-full">+45%</span>
+</div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">127</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Descargas realizadas</p>
+</div>
+
+<!-- Stat 2 -->
+<div class="bg-white dark:bg-background-dark rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-800 hover:shadow-xl transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-purple-600 text-3xl">psychology</span>
+<span class="text-xs font-semibold text-purple-600 bg-purple-100 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">+89%</span>
+</div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">43</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Resúmenes generados</p>
+</div>
+
+<!-- Stat 3 -->
+<div class="bg-white dark:bg-background-dark rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-800 hover:shadow-xl transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-orange-600 text-3xl">cloud_upload</span>
+<span class="text-xs font-semibold text-orange-600 bg-orange-100 dark:bg-orange-900/30 px-2 py-0.5 rounded-full">+67%</span>
+</div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">2.8 GB</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Materiales subidos</p>
+</div>
+
+<!-- Stat 4 -->
+<div class="bg-white dark:bg-background-dark rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-800 hover:shadow-xl transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-green-600 text-3xl">schedule</span>
+<span class="text-xs font-semibold text-green-600 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">Top 5%</span>
+</div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">18h</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Tiempo ahorrado</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Gestión de Suscripción -->
+<section class="py-8 bg-white dark:bg-background-dark">
+<div class="container mx-auto px-6">
+<div class="max-w-4xl mx-auto">
+<div class="bg-gradient-to-br from-premium-gold/10 to-orange-100/10 dark:from-premium-gold/5 dark:to-orange-900/5 rounded-2xl p-6 border-2 border-premium-gold/30">
+<div class="flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-gradient-to-br from-premium-gold to-premium-dark rounded-xl p-3 shadow-lg">
+<span class="material-symbols-outlined text-white text-4xl">account_circle</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">
+Gestiona tu Suscripción Premium
+</h3>
+<p class="text-sm text-gray-600 dark:text-gray-400">
+Próximo pago: <span class="font-semibold text-gray-900 dark:text-white">10 Noviembre 2025</span>
+</p>
+<p class="text-xs text-gray-500 dark:text-gray-500 mt-0.5">
+Monto: $4.990 CLP/mes · Renovación automática
+</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a href="../gestionar_plan/code.html" class="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-bold text-sm hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>Gestionar Plan</span>
+</a>
+<button class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-lg font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">receipt_long</span>
+<span>Ver Facturas</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Beneficios adicionales -->
+<div class="mt-4 grid md:grid-cols-3 gap-4">
+<div class="bg-blue-50 dark:bg-blue-900/10 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+<span class="material-symbols-outlined text-blue-600 text-2xl mb-2 block">card_giftcard</span>
+<h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Invita Amigos</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">
+Gana 1 mes gratis por cada amigo que invite a Premium
+</p>
+<button class="text-xs text-blue-600 font-semibold hover:underline">Enviar invitación →</button>
+</div>
+
+<div class="bg-purple-50 dark:bg-purple-900/10 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+<span class="material-symbols-outlined text-purple-600 text-2xl mb-2 block">star</span>
+<h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Programa de Recompensas</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">
+Acumula puntos y canjéalos por meses Premium gratis
+</p>
+<button class="text-xs text-purple-600 font-semibold hover:underline">Ver puntos →</button>
+</div>
+
+<div class="bg-orange-50 dark:bg-orange-900/10 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
+<span class="material-symbols-outlined text-orange-600 text-2xl mb-2 block">trending_up</span>
+<h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Upgrades Futuros</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">
+Acceso anticipado a nuevas funciones y características
+</p>
+<button class="text-xs text-orange-600 font-semibold hover:underline">Próximamente →</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA Final -->
+<section class="py-16 bg-gradient-to-br from-premium-gold via-yellow-400 to-amber-500">
+<div class="container mx-auto px-6">
+<div class="max-w-4xl mx-auto text-center">
+<span class="material-symbols-outlined text-gray-900 mb-6 inline-block" style="font-size: 80px;">rocket_launch</span>
+<h2 class="text-4xl font-bold text-gray-900 mb-4">
+¡Aprovecha al Máximo tu Premium!
+</h2>
+<p class="text-xl text-gray-800 mb-8">
+Explora todas las funciones y empieza a estudiar más eficientemente hoy mismo
+</p>
+<div class="flex flex-wrap justify-center gap-4">
+<a href="../dashboard_principal/code.html" class="px-8 py-4 bg-gray-900 text-white rounded-xl font-bold hover:scale-105 transition-transform shadow-xl flex items-center gap-2">
+<span class="material-symbols-outlined">home</span>
+<span>Ir al Dashboard</span>
+</a>
+<a href="../resultados_de_búsqueda/code.html" class="px-8 py-4 bg-white text-gray-900 rounded-xl font-bold hover:scale-105 transition-transform shadow-xl flex items-center gap-2">
+<span class="material-symbols-outlined">search</span>
+<span>Explorar Materiales</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12 mt-auto">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-4 gap-8 mb-8">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<svg class="h-6 w-6 text-premium-gold" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path></svg>
+<span class="font-bold text-lg">Kampus Premium</span>
+</div>
+<p class="text-sm text-gray-400">La mejor plataforma para compartir material académico universitario en Chile.</p>
+</div>
+<div>
+<h4 class="font-bold mb-4">Enlaces</h4>
+<ul class="space-y-1.5 text-sm text-gray-400">
+<li><a href="../dashboard_principal/code.html" class="hover:text-premium-gold transition-colors">Inicio</a></li>
+<li><a href="../resultados_de_búsqueda/code.html" class="hover:text-premium-gold transition-colors">Explorar</a></li>
+<li><a href="../mis_materiales/code.html" class="hover:text-premium-gold transition-colors">Mis Materiales</a></li>
+<li><a href="../planes/code.html" class="hover:text-premium-gold transition-colors">Planes</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">Soporte Premium</h4>
+<ul class="space-y-1.5 text-sm text-gray-400">
+<li><a href="#" class="hover:text-premium-gold transition-colors">Centro de Ayuda VIP</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Chat Prioritario</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Gestionar Suscripción</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Facturación</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">Legal</h4>
+<ul class="space-y-1.5 text-sm text-gray-400">
+<li><a href="#" class="hover:text-premium-gold transition-colors">Términos de Servicio</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Política de Privacidad</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Política de Reembolso</a></li>
+<li><a href="#" class="hover:text-premium-gold transition-colors">Contacto</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+<p>© 2025 Kampus Premium. Todos los derechos reservados.</p>
+</div>
+</div>
+</footer>
+
+</div>
+
+<script>
+// Animación de contador en las estadísticas
+document.addEventListener('DOMContentLoaded', () => {
+  const stats = document.querySelectorAll('.text-3xl.font-bold');
+  
+  const animateValue = (element, start, end, duration, isGB = false) => {
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        current = end;
+        clearInterval(timer);
+      }
+      if (isGB) {
+        element.textContent = current.toFixed(1) + ' GB';
+      } else if (element.textContent.includes('h')) {
+        element.textContent = Math.floor(current) + 'h';
+      } else {
+        element.textContent = Math.floor(current);
+      }
+    }, 16);
+  };
+  
+  // Observador para animar cuando sea visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stat = entry.target;
+        const text = stat.textContent;
+        
+        if (text.includes('GB')) {
+          animateValue(stat, 0, 2.8, 1500, true);
+        } else if (text === '127') {
+          animateValue(stat, 0, 127, 1500);
+        } else if (text === '43') {
+          animateValue(stat, 0, 43, 1500);
+        } else if (text.includes('h')) {
+          animateValue(stat, 0, 18, 1500);
+        }
+        
+        observer.unobserve(stat);
+      }
+    });
+  });
+  
+  stats.forEach(stat => observer.observe(stat));
+});
+</script>
+
+<!-- Verificar acceso a página Premium -->
+<script>
+// Verificar si hay Premium activo en localStorage
+const premiumActive = localStorage.getItem('kampus_premium_active') === 'true';
+const premiumData = localStorage.getItem('kampus_premium');
+
+if (!premiumActive || !premiumData) {
+  // Mostrar página de Empty State en vez de redirigir inmediatamente
+  showEmptyState();
+} else {
+  // Verificar que no haya expirado
+  try {
+    const data = JSON.parse(premiumData);
+    const endDate = new Date(data.endDate);
+    const now = new Date();
+    
+    if (endDate < now) {
+      // Premium expirado
+      localStorage.removeItem('kampus_premium_active');
+      localStorage.removeItem('kampus_premium');
+      showExpiredState();
+    }
+  } catch (error) {
+    console.error('Error al verificar Premium:', error);
+    showEmptyState();
+  }
+}
+
+function showEmptyState() {
+  // Ocultar todo el contenido de la página
+  const sections = document.querySelectorAll('main section');
+  sections.forEach(section => section.style.display = 'none');
+  
+  // Crear y mostrar empty state
+  const emptyState = document.createElement('div');
+  emptyState.className = 'min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-background-dark py-16 px-6';
+  emptyState.innerHTML = `
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- Icono de candado -->
+      <div class="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700 rounded-full mb-8 shadow-xl">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-gray-500 dark:text-gray-400">
+          <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      
+      <!-- Título y descripción -->
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        No tienes Premium activo
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        Activa un plan Premium para acceder a funciones exclusivas y potenciar tu experiencia de estudio
+      </p>
+      
+      <!-- Lista de beneficios -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 mb-8 shadow-xl border border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">
+          Lo que te estás perdiendo:
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 text-left">
+          <div class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-500 flex-shrink-0">
+              <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+            </svg>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white">Descargas ilimitadas</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Sin límites ni restricciones</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-purple-500 flex-shrink-0">
+              <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+            </svg>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white">Resúmenes IA</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Generados con GPT-4</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-green-500 flex-shrink-0">
+              <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white">Sin anuncios</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Experiencia sin interrupciones</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-orange-500 flex-shrink-0">
+              <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+              <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+            </svg>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white">Soporte prioritario</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Atención 24/7</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botones de acción -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="../planes/code.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+          </svg>
+          <span>Activar Premium Ahora</span>
+        </a>
+        
+        <a href="../dashboard_principal/code.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+            <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+          </svg>
+          <span>Volver al Inicio</span>
+        </a>
+      </div>
+      
+      <!-- Link adicional -->
+      <p class="mt-8 text-sm text-gray-500 dark:text-gray-400">
+        ¿Ya tienes Premium? <a href="../planes/code.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Verifica tu plan</a>
+      </p>
+    </div>
+  `;
+  
+  // Insertar el empty state después del header
+  const header = document.querySelector('header');
+  if (header && header.nextSibling) {
+    header.parentNode.insertBefore(emptyState, header.nextSibling);
+  } else {
+    document.body.appendChild(emptyState);
+  }
+}
+
+function showExpiredState() {
+  // Similar al empty state pero con mensaje de expiración
+  const sections = document.querySelectorAll('main section');
+  sections.forEach(section => section.style.display = 'none');
+  
+  const expiredState = document.createElement('div');
+  expiredState.className = 'min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 py-16 px-6';
+  expiredState.innerHTML = `
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-orange-400 to-red-500 rounded-full mb-8 shadow-xl">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-white">
+          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        Tu plan Premium ha expirado
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        Renueva tu suscripción para seguir disfrutando de todos los beneficios exclusivos
+      </p>
+      
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-8 shadow-xl border border-orange-200 dark:border-orange-700">
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">
+          <strong>¿Extrañas tus funciones Premium?</strong><br/>
+          Renueva ahora y recupera el acceso inmediato a todas las ventajas
+        </p>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="../planes/code.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clip-rule="evenodd" />
+          </svg>
+          <span>Renovar Premium</span>
+        </a>
+        
+        <a href="../dashboard_principal/code.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-lg">
+          <span>Volver al Inicio</span>
+        </a>
+      </div>
+    </div>
+  `;
+  
+  const header = document.querySelector('header');
+  if (header && header.nextSibling) {
+    header.parentNode.insertBefore(expiredState, header.nextSibling);
+  } else {
+    document.body.appendChild(expiredState);
+  }
+}
+</script>
+
+<!-- Script de sincronización de avatar -->
+<script src="../js/header-sync.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

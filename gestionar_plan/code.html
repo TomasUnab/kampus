@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Kampus - Gestionar Plan Premium</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "premium-gold": "#fbbf24",
+            "premium-dark": "#d97706",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans"]
+          },
+        },
+      },
+    }
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="min-h-screen flex flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-black/10 dark:border-white/10">
+  <div class="container mx-auto px-6">
+    <div class="flex items-center justify-center h-16 gap-6">
+      
+      <!-- Logo y Nombre -->
+      <div class="flex items-center gap-3">
+        <a class="flex items-center gap-2 text-gray-900 dark:text-white" href="../dashboard_principal/code.html">
+          <svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+          </svg>
+          <h1 class="text-xl font-bold">Kampus</h1>
+        </a>
+      </div>
+
+      <!-- Badge Premium -->
+      <div class="bg-gradient-to-r from-orange-500 to-yellow-500 px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 border-2 border-orange-600">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+          <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-xs font-bold text-white">Premium</span>
+      </div>
+
+      <!-- Navegación -->
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="text-sm font-semibold text-gray-900 dark:text-white hover:text-primary transition-colors" href="../dashboard_principal/code.html">Inicio</a>
+        <a class="text-sm font-semibold text-gray-900 dark:text-white hover:text-primary transition-colors" href="../resultados_de_búsqueda/code.html">Explorar</a>
+        <a class="text-sm font-semibold text-gray-900 dark:text-white hover:text-primary transition-colors" href="../mis_materiales/code.html">Mis materiales</a>
+      </nav>
+
+      <!-- Avatar -->
+      <div class="flex items-center gap-4">
+        <div data-header-avatar class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 cursor-pointer ring-2 ring-primary hover:ring-premium-gold transition-all" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow py-8">
+  <div class="container mx-auto px-6 max-w-6xl">
+    
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-sm mb-6">
+      <a href="../dashboard_principal/code.html" class="text-gray-600 dark:text-gray-400 hover:text-primary">Inicio</a>
+      <span class="text-gray-400">/</span>
+      <a href="../premium_activo/code.html" class="text-gray-600 dark:text-gray-400 hover:text-primary">Premium</a>
+      <span class="text-gray-400">/</span>
+      <span class="text-gray-900 dark:text-white font-semibold">Gestionar Plan</span>
+    </div>
+
+    <!-- Page Title -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        Gestionar Plan Premium
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400">
+        Administra tu suscripción, métodos de pago y preferencias
+      </p>
+    </div>
+
+    <!-- Plan Actual Card -->
+    <div class="bg-gradient-to-br from-premium-gold/20 to-orange-100/20 dark:from-premium-gold/10 dark:to-orange-900/10 rounded-xl p-6 border-2 border-premium-gold/40 mb-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-start gap-4">
+          <div class="bg-gradient-to-br from-premium-gold to-premium-dark rounded-xl p-3 shadow-lg">
+            <span class="material-symbols-outlined text-white text-3xl">workspace_premium</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Plan Premium</h2>
+              <span class="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">ACTIVO</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+              Próxima renovación: <span class="font-semibold text-gray-900 dark:text-white">10 Noviembre 2025</span>
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-500">
+              $4.990 CLP/mes · Renovación automática activa
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <a href="../planes/code.html" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-700 rounded-lg font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">compare_arrows</span>
+            <span>Cambiar Plan</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de Secciones -->
+    <div class="grid lg:grid-cols-2 gap-6">
+      
+      <!-- Método de Pago -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-600">credit_card</span>
+            Método de Pago
+          </h3>
+          <button onclick="editarMetodoPago()" class="text-sm text-primary font-semibold hover:underline">Editar</button>
+        </div>
+        
+        <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-4 text-white mb-4">
+          <div class="flex justify-between items-start mb-6">
+            <span class="material-symbols-outlined text-3xl">credit_card</span>
+            <span class="text-xs font-semibold bg-white/20 px-2 py-1 rounded">VISA</span>
+          </div>
+          <p class="text-lg font-mono tracking-wider mb-3">•••• •••• •••• 4532</p>
+          <div class="flex justify-between text-xs">
+            <div>
+              <p class="opacity-70 mb-1">Titular</p>
+              <p class="font-semibold">JUAN PÉREZ</p>
+            </div>
+            <div class="text-right">
+              <p class="opacity-70 mb-1">Vencimiento</p>
+              <p class="font-semibold">12/27</p>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="agregarTarjeta()" class="w-full py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-semibold text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">add</span>
+          <span>Agregar Nueva Tarjeta</span>
+        </button>
+      </div>
+
+      <!-- Renovación Automática -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-green-600">autorenew</span>
+            Renovación Automática
+          </h3>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="toggleRenovacion" class="sr-only peer" checked onchange="toggleRenovacionAutomatica(this)">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-premium-gold/20 dark:peer-focus:ring-premium-gold/20 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-premium-gold"></div>
+          </label>
+        </div>
+
+        <div class="space-y-3 mb-4">
+          <div class="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Estado</span>
+            </div>
+            <span class="text-sm font-bold text-green-600">Activada</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-gray-600 text-xl">event</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Próximo cargo</span>
+            </div>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">10 Nov 2025</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-gray-600 text-xl">payments</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Monto</span>
+            </div>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">$4.990 CLP</span>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
+          <span class="material-symbols-outlined text-blue-600 text-sm align-middle">info</span>
+          Tu suscripción se renovará automáticamente. Puedes cancelarla en cualquier momento.
+        </p>
+      </div>
+
+      <!-- Historial de Facturas -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-purple-600">receipt_long</span>
+            Historial de Facturas
+          </h3>
+          <button onclick="verTodasFacturas()" class="text-sm text-primary font-semibold hover:underline">Ver todas</button>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Factura 1 -->
+          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-lg">
+                <span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Octubre 2025</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">10 Oct 2025</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold text-gray-900 dark:text-white">$4.990</span>
+              <button class="text-primary hover:text-primary/80">
+                <span class="material-symbols-outlined text-xl">download</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Factura 2 -->
+          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-lg">
+                <span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Septiembre 2025</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">10 Sep 2025</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold text-gray-900 dark:text-white">$4.990</span>
+              <button class="text-primary hover:text-primary/80">
+                <span class="material-symbols-outlined text-xl">download</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Factura 3 -->
+          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-lg">
+                <span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Agosto 2025</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">10 Ago 2025</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold text-gray-900 dark:text-white">$4.990</span>
+              <button class="text-primary hover:text-primary/80">
+                <span class="material-symbols-outlined text-xl">download</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Uso del Plan -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-orange-600">analytics</span>
+            Uso del Plan
+          </h3>
+          <span class="text-xs text-gray-500 dark:text-gray-400">Este mes</span>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Descargas -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Descargas</span>
+              <span class="text-sm font-bold text-blue-600">127 / Ilimitadas</span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Resúmenes IA -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Resúmenes IA</span>
+              <span class="text-sm font-bold text-purple-600">43 / Ilimitados</span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Almacenamiento -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-900 dark:text-white">Almacenamiento</span>
+              <span class="text-sm font-bold text-orange-600">2.8 GB / Ilimitado</span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style="width: 15%"></div>
+            </div>
+          </div>
+
+          <!-- Tiempo Ahorrado -->
+          <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 border border-green-200 dark:border-green-800">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-green-600 text-xl">schedule</span>
+                <span class="text-sm font-medium text-gray-900 dark:text-white">Tiempo ahorrado</span>
+              </div>
+              <span class="text-lg font-bold text-green-600">18 horas</span>
+            </div>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Estás en el top 5% de usuarios</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Programa de Referidos -->
+    <div class="mt-6 bg-gradient-to-br from-primary/10 to-blue-100/10 dark:from-primary/5 dark:to-blue-900/5 rounded-xl p-6 border-2 border-primary/30">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-start gap-4">
+          <div class="bg-gradient-to-br from-primary to-blue-600 rounded-xl p-3 shadow-lg">
+            <span class="material-symbols-outlined text-white text-3xl">card_giftcard</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              Invita amigos y gana 1 mes gratis
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              Por cada amigo que se suscriba a Premium, ambos reciben 1 mes gratis
+            </p>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="material-symbols-outlined text-primary text-lg">person_add</span>
+              <span class="font-semibold text-gray-900 dark:text-white">3 amigos invitados</span>
+              <span class="text-gray-400">·</span>
+              <span class="text-green-600 font-bold">1 mes gratis ganado</span>
+            </div>
+          </div>
+        </div>
+        <button onclick="invitarAmigos()" class="px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold transition-colors shadow-lg flex items-center gap-2 whitespace-nowrap">
+          <span class="material-symbols-outlined">share</span>
+          <span>Invitar Amigos</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Códigos Promocionales -->
+    <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+        <span class="material-symbols-outlined text-yellow-600">confirmation_number</span>
+        Códigos Promocionales
+      </h3>
+      
+      <div class="flex gap-3">
+        <input 
+          id="codigoPromo"
+          type="text" 
+          placeholder="Ingresa tu código promocional" 
+          class="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+        <button onclick="aplicarCodigo()" class="px-6 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
+          Aplicar
+        </button>
+      </div>
+    </div>
+
+    <!-- Zona de Peligro -->
+    <div class="mt-6 bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border-2 border-red-200 dark:border-red-800">
+      <h3 class="text-lg font-bold text-red-900 dark:text-red-400 mb-2 flex items-center gap-2">
+        <span class="material-symbols-outlined">warning</span>
+        Zona de Peligro
+      </h3>
+      <p class="text-sm text-red-700 dark:text-red-300 mb-4">
+        Las siguientes acciones son irreversibles. Asegúrate de entender las consecuencias antes de proceder.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="pausarSuscripcion()" class="px-4 py-2 bg-white dark:bg-gray-800 text-red-600 border-2 border-red-300 dark:border-red-700 rounded-lg font-semibold hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">pause_circle</span>
+          <span>Pausar Suscripción</span>
+        </button>
+        
+        <button onclick="cancelarSuscripcion()" class="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">cancel</span>
+          <span>Cancelar Suscripción</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-8">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        © 2025 Kampus. Todos los derechos reservados.
+      </p>
+      <div class="flex gap-6">
+        <a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Ayuda</a>
+        <a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Términos</a>
+        <a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">Privacidad</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<!-- Modal Container -->
+<div id="modalContainer" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div id="modalContent" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+  </div>
+</div>
+
+<script>
+// Utilidades de Modal
+function mostrarModal(html) {
+  const modal = document.getElementById('modalContainer');
+  const content = document.getElementById('modalContent');
+  content.innerHTML = html;
+  modal.classList.remove('hidden');
+}
+
+function cerrarModal() {
+  const modal = document.getElementById('modalContainer');
+  modal.classList.add('hidden');
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('modalContainer').addEventListener('click', function(e) {
+  if (e.target === this) cerrarModal();
+});
+
+// Editar Método de Pago
+function editarMetodoPago() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Editar Método de Pago</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <form class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número de Tarjeta</label>
+          <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Vencimiento</label>
+            <input type="text" placeholder="MM/AA" maxlength="5" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CVV</label>
+            <input type="text" placeholder="123" maxlength="3" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Titular</label>
+          <input type="text" placeholder="JUAN PEREZ" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+        </div>
+        
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="guardarMetodoPago()" class="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+            Guardar Cambios
+          </button>
+          <button type="button" onclick="cerrarModal()" class="px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  `);
+}
+
+function guardarMetodoPago() {
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Método de Pago Actualizado</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">Tu tarjeta ha sido actualizada exitosamente.</p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Entendido
+      </button>
+    </div>
+  `);
+}
+
+// Agregar Nueva Tarjeta
+function agregarTarjeta() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Agregar Nueva Tarjeta</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <form class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número de Tarjeta</label>
+          <input type="text" id="nuevoNumero" placeholder="1234 5678 9012 3456" maxlength="19" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Vencimiento</label>
+            <input type="text" placeholder="MM/AA" maxlength="5" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CVV</label>
+            <input type="text" placeholder="123" maxlength="3" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Titular</label>
+          <input type="text" id="nuevoTitular" placeholder="JUAN PEREZ" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+        </div>
+        
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="confirmarNuevaTarjeta()" class="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+            Agregar Tarjeta
+          </button>
+          <button type="button" onclick="cerrarModal()" class="px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  `);
+}
+
+function confirmarNuevaTarjeta() {
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Tarjeta Agregada</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">Tu nueva tarjeta ha sido agregada exitosamente y está lista para usarse.</p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Entendido
+      </button>
+    </div>
+  `);
+}
+
+// Toggle Renovación Automática
+function toggleRenovacionAutomatica(checkbox) {
+  const estadoDiv = checkbox.closest('.bg-white').querySelector('.bg-green-50, .bg-red-50');
+  const estadoTexto = estadoDiv.querySelector('.text-green-600, .text-red-600');
+  
+  if (checkbox.checked) {
+    estadoDiv.className = 'flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800';
+    estadoTexto.textContent = 'Activada';
+    estadoTexto.className = 'text-sm font-bold text-green-600';
+    
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-green-600">autorenew</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Renovación Automática Activada</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Tu suscripción se renovará automáticamente el <strong>10 de Noviembre 2025</strong>.</p>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+  } else {
+    estadoDiv.className = 'flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800';
+    estadoTexto.textContent = 'Desactivada';
+    estadoTexto.className = 'text-sm font-bold text-red-600';
+    
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-orange-600">warning</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Renovación Automática Desactivada</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Tu suscripción finalizará el <strong>10 de Noviembre 2025</strong>. Puedes reactivarla en cualquier momento.</p>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+  }
+}
+
+// Ver Todas las Facturas
+function verTodasFacturas() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Historial de Facturas</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="space-y-2">
+        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <div>
+            <p class="font-semibold text-gray-900 dark:text-white">Octubre 2025</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">$4.990 CLP</p>
+          </div>
+          <button onclick="descargarFactura('Octubre 2025')" class="text-primary hover:text-primary/80">
+            <span class="material-symbols-outlined">download</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <div>
+            <p class="font-semibold text-gray-900 dark:text-white">Septiembre 2025</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">$4.990 CLP</p>
+          </div>
+          <button onclick="descargarFactura('Septiembre 2025')" class="text-primary hover:text-primary/80">
+            <span class="material-symbols-outlined">download</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <div>
+            <p class="font-semibold text-gray-900 dark:text-white">Agosto 2025</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">$4.990 CLP</p>
+          </div>
+          <button onclick="descargarFactura('Agosto 2025')" class="text-primary hover:text-primary/80">
+            <span class="material-symbols-outlined">download</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <div>
+            <p class="font-semibold text-gray-900 dark:text-white">Julio 2025</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">$4.990 CLP</p>
+          </div>
+          <button onclick="descargarFactura('Julio 2025')" class="text-primary hover:text-primary/80">
+            <span class="material-symbols-outlined">download</span>
+          </button>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+          <div>
+            <p class="font-semibold text-gray-900 dark:text-white">Junio 2025</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">$4.990 CLP</p>
+          </div>
+          <button onclick="descargarFactura('Junio 2025')" class="text-primary hover:text-primary/80">
+            <span class="material-symbols-outlined">download</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+        <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Total pagado:</strong> $24.950 CLP</p>
+      </div>
+    </div>
+  `);
+}
+
+// Descargar Factura
+function descargarFactura(mes) {
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-blue-600 animate-bounce">download</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Descargando Factura</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-2">Factura de <strong>${mes}</strong></p>
+      <p class="text-sm text-gray-500 dark:text-gray-500 mb-6">Formato: PDF • Tamaño: 125 KB</p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Cerrar
+      </button>
+    </div>
+  `);
+  
+  setTimeout(() => {
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Factura Descargada</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Archivo: <strong>Factura_Kampus_Premium_${mes.replace(' ', '_')}.pdf</strong></p>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+  }, 2000);
+}
+
+// Agregar onclick a todos los botones de descarga de facturas
+document.addEventListener('DOMContentLoaded', function() {
+  const botonesDescarga = document.querySelectorAll('.text-primary.hover\\:text-primary\\/80');
+  botonesDescarga.forEach((boton, index) => {
+    const meses = ['Octubre 2025', 'Septiembre 2025', 'Agosto 2025'];
+    if (index < 3) boton.onclick = () => descargarFactura(meses[index]);
+  });
+});
+
+// Invitar Amigos
+function invitarAmigos() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Invitar Amigos</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <form class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email de tu amigo</label>
+          <input type="email" id="emailAmigo" placeholder="amigo@ejemplo.com" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+        </div>
+        
+        <div class="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+          <p class="text-sm font-semibold text-gray-900 dark:text-white mb-2">🎁 Beneficios</p>
+          <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+            <li>• Tu amigo obtiene 10% de descuento</li>
+            <li>• Tú obtienes 1 mes gratis cuando se suscriba</li>
+          </ul>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="enviarInvitacion()" class="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+            Enviar Invitación
+          </button>
+          <button type="button" onclick="cerrarModal()" class="px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  `);
+}
+
+function enviarInvitacion() {
+  const email = document.getElementById('emailAmigo').value;
+  if (!email || !email.includes('@')) {
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-red-600">error</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Email Inválido</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Por favor ingresa un email válido.</p>
+        <button onclick="invitarAmigos()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Reintentar
+        </button>
+      </div>
+    `);
+    return;
+  }
+  
+  const codigoReferido = 'KAMPUS' + Math.random().toString(36).substring(2, 8).toUpperCase();
+  
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-green-600">mark_email_read</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Invitación Enviada</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">Se ha enviado una invitación a <strong>${email}</strong></p>
+      <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-4">
+        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Código de referido</p>
+        <p class="text-lg font-bold text-primary">${codigoReferido}</p>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Total de invitaciones: <strong>4</strong></p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Entendido
+      </button>
+    </div>
+  `);
+}
+
+// Aplicar Código Promocional
+function aplicarCodigo() {
+  const input = document.getElementById('codigoPromo');
+  const codigo = input.value.trim().toUpperCase();
+  
+  if (!codigo) {
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-orange-600">warning</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Código Requerido</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Por favor ingresa un código promocional.</p>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+    return;
+  }
+  
+  const codigosValidos = {
+    'WELCOME10': { descuento: 10, tipo: 'porcentaje', descripcion: 'Bienvenida' },
+    'ESTUDIANTE': { descuento: 20, tipo: 'porcentaje', descripcion: 'Estudiante' },
+    'VERANO2025': { descuento: 1000, tipo: 'fijo', descripcion: 'Verano 2025' },
+    'REFERIDO': { descuento: 1, tipo: 'meses', descripcion: 'Referido' }
+  };
+  
+  if (codigosValidos[codigo]) {
+    const promo = codigosValidos[codigo];
+    let detalleDescuento = '';
+    let precioFinal = '';
+    
+    if (promo.tipo === 'porcentaje') {
+      detalleDescuento = `${promo.descuento}% de descuento`;
+      precioFinal = `$${(4990 * (1 - promo.descuento/100)).toLocaleString('es-CL')} CLP/mes`;
+    } else if (promo.tipo === 'fijo') {
+      detalleDescuento = `$${promo.descuento.toLocaleString('es-CL')} CLP de descuento`;
+      precioFinal = `$${(4990 - promo.descuento).toLocaleString('es-CL')} CLP/mes`;
+    } else if (promo.tipo === 'meses') {
+      detalleDescuento = `${promo.descuento} mes gratis`;
+      precioFinal = 'Sin cambios en el precio mensual';
+    }
+    
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-green-600">celebration</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">¡Código Aplicado!</h3>
+        <div class="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800 mb-4">
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Código: <strong>${codigo}</strong></p>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">Promoción: <strong>${promo.descripcion}</strong></p>
+          <p class="text-lg font-bold text-primary mb-2">${detalleDescuento}</p>
+          <p class="text-sm text-gray-700 dark:text-gray-300">${precioFinal}</p>
+        </div>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+    input.value = '';
+  } else {
+    mostrarModal(`
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-4xl text-red-600">cancel</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Código Inválido</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">El código "<strong>${codigo}</strong>" no existe o ha expirado.</p>
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-left mb-6">
+          <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Códigos disponibles:</p>
+          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            <li>• <strong>WELCOME10</strong> - 10% descuento</li>
+            <li>• <strong>ESTUDIANTE</strong> - 20% descuento</li>
+            <li>• <strong>VERANO2025</strong> - $1.000 descuento</li>
+            <li>• <strong>REFERIDO</strong> - 1 mes gratis</li>
+          </ul>
+        </div>
+        <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+          Entendido
+        </button>
+      </div>
+    `);
+  }
+}
+
+// Pausar Suscripción
+function pausarSuscripcion() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Pausar Suscripción</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="mb-4">
+        <p class="text-gray-600 dark:text-gray-400 mb-4">¿Deseas pausar tu suscripción Premium?</p>
+        
+        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+          <p class="text-sm font-semibold text-gray-900 dark:text-white mb-2">Durante la pausa:</p>
+          <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+            <li>• No se realizarán cargos</li>
+            <li>• Mantendrás el acceso hasta el 10 de Noviembre 2025</li>
+            <li>• Podrás reactivarla en cualquier momento</li>
+          </ul>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">¿Por cuántos meses?</label>
+          <select id="mesesPausa" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+            <option value="1">1 mes</option>
+            <option value="2">2 meses</option>
+            <option value="3">3 meses</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="flex gap-3">
+        <button onclick="confirmarPausa()" class="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2.5 rounded-lg transition">
+          Pausar Suscripción
+        </button>
+        <button onclick="cerrarModal()" class="px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function confirmarPausa() {
+  const meses = document.getElementById('mesesPausa').value;
+  const fechaReactivacion = new Date(2025, 10 + parseInt(meses), 10).toLocaleDateString('es-ES', {day: 'numeric', month: 'long', year: 'numeric'});
+  
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-orange-600">pause_circle</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Suscripción Pausada</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">Tu suscripción ha sido pausada por <strong>${meses} mes(es)</strong></p>
+      <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-6">
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Reactivación automática</p>
+        <p class="text-lg font-bold text-gray-900 dark:text-white">${fechaReactivacion}</p>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Recibirás un recordatorio antes de la reactivación.</p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Entendido
+      </button>
+    </div>
+  `);
+}
+
+// Cancelar Suscripción
+function cancelarSuscripcion() {
+  mostrarModal(`
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Cancelar Suscripción</h3>
+        <button onclick="cerrarModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="mb-4">
+        <p class="text-gray-600 dark:text-gray-400 mb-4">¿Estás seguro de que deseas cancelar tu suscripción Premium?</p>
+        
+        <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 mb-4">
+          <p class="text-sm font-semibold text-gray-900 dark:text-white mb-2">Al cancelar:</p>
+          <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+            <li>• Perderás todas las funciones premium</li>
+            <li>• El acceso continuará hasta el 10 de Noviembre 2025</li>
+            <li>• No se realizarán más cargos</li>
+            <li>• Podrás volver a suscribirte cuando quieras</li>
+          </ul>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">¿Cuál es el motivo principal? (opcional)</label>
+          <select id="motivoCancelacion" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+            <option value="">Selecciona un motivo</option>
+            <option value="precio">Muy caro</option>
+            <option value="uso">No uso las funciones</option>
+            <option value="tecnico">Problemas técnicos</option>
+            <option value="alternativa">Encontré otra alternativa</option>
+            <option value="otro">Otro motivo</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="flex gap-3">
+        <button onclick="confirmarCancelacion()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg transition">
+          Confirmar Cancelación
+        </button>
+        <button onclick="cerrarModal()" class="px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
+          Mantener Suscripción
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function confirmarCancelacion() {
+  const motivoSelect = document.getElementById('motivoCancelacion');
+  const motivoTexto = motivoSelect.options[motivoSelect.selectedIndex].text;
+  
+  mostrarModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-4xl text-gray-600">sentiment_dissatisfied</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Suscripción Cancelada</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">Lamentamos verte partir.</p>
+      ${motivoSelect.value ? `<p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Motivo: <strong>${motivoTexto}</strong></p>` : ''}
+      <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-4">
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Acceso hasta</p>
+        <p class="text-lg font-bold text-gray-900 dark:text-white">10 de Noviembre 2025</p>
+      </div>
+      <div class="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800 mb-6">
+        <p class="text-sm font-semibold text-gray-900 dark:text-white mb-2">¿Sabías que?</p>
+        <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1 text-left">
+          <li>• Podrías ahorrar 30% con el plan anual</li>
+          <li>• Tenemos descuentos estudiantiles disponibles</li>
+        </ul>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-500 mb-6">Te hemos enviado un email de confirmación.</p>
+      <button onclick="cerrarModal()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition">
+        Entendido
+      </button>
+    </div>
+  `);
+}
+</script>
+
+</body>
+</html>

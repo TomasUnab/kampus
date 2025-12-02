@@ -1,0 +1,25 @@
+{
+  "name": "Kampus - Materiales Universitarios",
+  "short_name": "Kampus",
+  "description": "Sistema de gestión de materiales académicos",
+  "start_url": "/dashboard_principal/code.html",
+  "display": "standalone",
+  "background_color": "#13a4ec",
+  "theme_color": "#13a4ec",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQ0IDExLjI3MjdDNDQgMTQuMDEwOSAzOS44Mzg2IDE2LjM5NTcgMzMuNjkgMTcuNjM2NEMzOS44Mzg2IDE4Ljg3NyA0NCAyMS4yNjE4IDQ0IDI0QzQ0IDI2LjczODIgMzkuODM4NiAyOS4xMjMgMzMuNjkgMzAuMzYzNkMzOS44Mzg2IDMxLjYwNDMgNDQgMzMuOTg5MSA0NCAzNi43MjczQzQ0IDQwLjc0MzkgMzUuMDQ1NyA0NCAyNCA0NEMxMi45NTQzIDQ0IDQgNDAuNzQzOSA0IDM2LjcyNzNDNCAzMy45ODkxIDguMTYxNDQgMzEuNjA0MyAxNC4zMSAzMC4zNjM2QzguMTYxNDQgMjkuMTIzIDQgMjYuNzM4MiA0IDI0QzQgMjEuMjYxOCA4LjE2MTQ0IDE4Ljg3NyAxNC4zMSAxNy42MzY0QzguMTYxNDQgMTYuMzk1NyA0IDE0LjAxMDkgNCA4LjI3MjdDNCA3LjI1NjExIDEyLjk1NDMgNCAyNCA0QzM1LjA0NTcgNCA0NCA3LjI1NjExIDQ0IDExLjI3MjdaIiBmaWxsPSIjMTNhNGVjIi8+Cjwvc3ZnPgo=",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDQ4IDQ4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNDQgMTEuMjcyN0M0NCAxNC4wMTA5IDM5LjgzODYgMTYuMzk1NyAzMy42OSAxNy42MzY0QzM5LjgzODYgMTguODc3IDQ0IDIxLjI2MTggNDQgMjRDNDQgMjYuNzM4MiAzOS44Mzg2IDI5LjEyMyAzMy42OSAzMC4zNjM2QzM5LjgzODYgMzEuNjA0MyA0NCAzMy45ODkxIDQ0IDM2LjcyNzNDNDQgNDAuNzQzOSAzNS4wNDU3IDQ0IDI0IDQ0QzEyLjk1NDMgNDQgNCA0MC43NDM5IDQgMzYuNzI3M0M0IDMzLjk4OTEgOC4xNjE0NCAzMS42MDQzIDE0LjMxIDMwLjM2MzZDOC4xNjE0NCAyOS4xMjMgNCAyNi43MzgyIDQgMjRDNCAyMS4yNjE4IDguMTYxNDQgMTguODc3IDE0LjMxIDE3LjYzNjRDOC4xNjE0NCAxNi4zOTU3IDQgMTQuMDEwOSA0IDExLjI3MjdDNCA3LjI1NjExIDEyLjk1NDMgNCAyNCA0QzM1LjA0NTcgNCA0NCA3LjI1NjExIDQ0IDExLjI3MjdaIiBmaWxsPSIjMTNhNGVjIi8+Cjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "es",
+  "dir": "ltr"
+}

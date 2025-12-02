@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>Kampus - Mis Materiales</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+
+<!-- Sistemas KAMPUS -->
+<script src="../js/session-manager.js"></script>
+<script src="../js/cache-manager.js"></script>
+<script src="../js/performance-optimizer.js"></script>
+<script src="../js/notification-system.js"></script>
+<script src="../js/moderation-system.js"></script>
+<script src="../js/kampus-init.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="stylesheet" href="../fix-mobile.css">
+<link rel="stylesheet" href="../css/mobile-fixes.css">
+<link rel="stylesheet" href="../css/mobile-layout-fixes.css">
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#13a4ec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101c22",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-2 text-primary">
+<svg class="h-8 w-8" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kampus</h1>
+</div>
+<!-- Botón menú móvil -->
+<button class="md:hidden p-2 text-gray-600 dark:text-gray-300" onclick="toggleMobileMenu()">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../dashboard_principal/code.html">Inicio</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../resultados_de_búsqueda/code.html">Explorar</a>
+<a class="text-sm font-medium text-primary dark:text-primary transition-colors" href="code.html">Mis materiales</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="../planes/code.html">Planes</a>
+</nav>
+
+<!-- Menú móvil -->
+<div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-700 md:hidden z-50 shadow-lg">
+<div class="px-4 py-4 space-y-2">
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../dashboard_principal/code.html">🏠 Inicio</a>
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../resultados_de_búsqueda/code.html">🔍 Explorar</a>
+<a class="block px-4 py-3 text-primary bg-primary/10 rounded-lg" href="code.html">📚 Mis materiales</a>
+<a class="block px-4 py-3 text-gray-600 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg" href="../planes/code.html">💎 Planes</a>
+</div>
+</div>
+
+<div class="flex items-center gap-4">
+<div class="relative">
+<button class="notification-button relative rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</button>
+<div class="notification-dropdown hidden absolute right-0 top-12 w-80 bg-white dark:bg-background-dark rounded-lg shadow-xl border border-black/10 dark:border-white/10 overflow-hidden z-50">
+<div class="px-4 py-3 border-b border-black/10 dark:border-white/10">
+<h3 class="text-sm font-semibold text-black dark:text-white">Notificaciones</h3>
+</div>
+<div class="max-h-96 overflow-y-auto">
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">★</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nueva valoración</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Juan Pérez calificó tu material "Apuntes de Cálculo II" con 5 estrellas</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">💬</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo comentario</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">María González comentó en "Guía de ejercicios de Física I"</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 5 horas</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-b border-black/5 dark:border-white/5">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">📥</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Material descargado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Tu material "Resumen de Historia" fue descargado 10 veces hoy</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 1 día</p>
+</div>
+</div>
+</div>
+<div class="notification-item px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="text-primary text-xs">🏆</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-black dark:text-white font-medium">Nuevo logro desbloqueado</p>
+<p class="text-xs text-black/60 dark:text-white/60 truncate">Has alcanzado 100 puntos de reputación</p>
+<p class="text-xs text-black/40 dark:text-white/40 mt-1">Hace 2 días</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t border-black/10 dark:border-white/10 text-center">
+<a href="#" class="text-xs text-primary hover:text-primary/80 font-medium">Ver todas las notificaciones</a>
+</div>
+</div>
+</div>
+<div data-header-avatar class="w-10 h-10 rounded-full bg-cover bg-center cursor-pointer" onclick="window.location.href='../perfil_de_usuario/code.html'" style='background-image: url("https://i.pravatar.cc/150?img=9");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white">Mis Materiales</h2>
+<p class="mt-2 text-gray-600 dark:text-gray-400">Gestiona tus materiales subidos y guardados</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors" onclick="window.location.href='../subida_de_material/code.html'">
+<span class="material-symbols-outlined">upload</span>
+<span>Subir Material</span>
+</button>
+</div>
+
+<div class="border-b border-gray-200 dark:border-gray-700 mb-6">
+<nav class="flex space-x-8" aria-label="Tabs">
+<button class="tab-btn active py-4 px-1 border-b-2 border-primary font-medium text-sm text-primary" data-tab="subidos">
+Materiales Subidos
+</button>
+<button class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600" data-tab="guardados">
+Materiales Guardados
+</button>
+</nav>
+</div>
+
+<div id="tab-subidos" class="tab-content">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDHxul7Nx10gzwdf5y7ENZQ3eI1HxZlopUqO88FlQasy7raPpXiNif_M5qtDrduWt925GFL9Hp4jrzAqGgTzKXRIdHI88kf6NNW_0i-JmNmTprY5aJKneuGrSgbOI-wspxpHZWWCT9sj0mADM1hz26FvHPntne4MDcbpCjBxJK84R9w-BPKw_-DTPzVstXPBwMHjSFxqakWElWtv1A8sEV8HYyqMFXUNpUZwGJQcGF4I_EEdSLPhymlVvdJyi058GGhGcJ9Oit_wI");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Apuntes de Cálculo II</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.5</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>245</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFCZILSJEr3cfdpN96FJEbquKtmh5xOGJoJsRTS8YBcnF8PTGEvS5h_UmoyoFxI890Qs2kkGIWd-yyRgKQLZb2-fi8pe1Qt3b8sMnVBfXMYw-QjECEZlF66cLk_kmKWpS6kmZtMtp6IwuiX9DUuPA9t1wy8ub0o1AOGG3xrU20NPne5WxFRvBcNwqja6qupzDa3TFkX2tUNpX6QP0MF0WNjzxD7Mbm4ti8v8F-_uJVOdYiFSpZGSIiZrRkNsn9yYMEhq3tzKXiHn8");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Guía de Física I</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.8</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>182</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3xDVhxaWodbhi5Ag8j60p7fPXFcRx86ZVJBTOQbJ5YmJ5OyHjs7s9vOLRXs9rNxZFQODhBCV0Lsy-zgAk31vyxsZ4yz_1GhK2nASaND08v66jfZ890BZ4JSOHi3liF-uldAYJn_6U1G72LUxgXulMrsCvSBuJO1NQvjVZ0esbWE1CiPv7LwIY3IDMUajLAZSJoPm1SdYlN9ftETSkxK5V_ITGhC3-1KFjTRm_1KV5ZV200RXjgc6IfsGiFegWlNinWJySo07MI7E");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Resumen Química General</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.3</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>156</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="tab-guardados" class="tab-content hidden">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDRRhN9nq8mJj5iGTLrXUpWBECITiV7INmwvNMmVSE5PCJdOWS7pfTBvUL0qYQtlApedC0U2GgDw4CvVmBnbcQi4iJPB86Vw1o5l3Q8pJIrQtTgtoLf2-ahl1t9QqhlkpS7w6QFkWCgXC2YgeTX0MKWo_Kq_3nZU9_NzLzG6rcqLRFfhmmpoWhEMTNI6cEIuSxkB6m0o-4wmTYVIBTSTptd8pyPK2m9fKVgNyFYuo_KSR8DzwQKviKasOwnRydFDAxEHSeY-tLfkZk");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Programación Avanzada</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.9</span>
+</div>
+<span class="text-gray-500">Por: Prof. Carlos</span>
+</div>
+</div>
+</div>
+
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZmKYCyFmviktFNuL2P3pTlNn3UOznTfEbiwEYkE6eXmsRvKUijqyp-auhC5MzH8vo9dJdYPuZuXp8pPbdot7iOVz3Va_7sPcxikEHbRSfforp_Iq_nKmayr3AjnLlOtsr9zfh2hreyRfKrwBX4HSMpQaf1gd3tjaSQtzUQLhZRHnyUNSakx5uXut2xxW2X0-3vR9gZ3fWrJaUJ2sFmxWkpRR53NFVhV_hQIanXX-tzgFMePGt4H3qmuOHo40rvgYg-lS6HAbQIsI");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Álgebra Lineal</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.7</span>
+</div>
+<span class="text-gray-500">Por: Sofía R.</span>
+</div>
+</div>
+</div>
+
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" onclick="window.location.href='../vista_previa_del_material/code.html'">
+<div class="aspect-video bg-cover bg-center group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXJDyWHZvTf057Tacx_EGd4u64j3rKjdjdfVdzNvVknyqkmDFOi3-ttXnNcYjTwn2XdbrIWwhSyHIEAHC1dL67nYjkhEhjEMI4FLizqIazBDe6cyTFYF49zPE3gQTrNDHGAsPEexVavlI_fJiZMyydbynpG6gw7XmG-1WheBB41lPWsquYxdHBNJDp9oCGFQpE4gDuCRbXXrMP0HCdpkpFeqIVc7nc_LeogZ1EzKMWu-WKdXcCTvVZn2rmH2qNU4Uxg4aBfhJ2jBM");'></div>
+<div class="p-4">
+<h3 class="font-bold text-gray-900 dark:text-white mb-2">Probabilidad y Estadística</h3>
+<div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-amber-500">star</span>
+<span>4.6</span>
+</div>
+<span class="text-gray-500">Por: Diego M.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Notificaciones dropdown
+    const notificationButton = document.querySelector('.notification-button');
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+
+    notificationButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!notificationDropdown.classList.contains('hidden') && !e.target.closest('.notification-dropdown')) {
+            notificationDropdown.classList.add('hidden');
+        }
+    });
+
+    // Menú móvil
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobile-menu');
+        const button = e.target.closest('button[onclick="toggleMobileMenu()"]');
+        if (!button && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+
+    const searchInput = document.getElementById('search-mis-materiales');
+    if(searchInput) {
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                window.location.href = '../resultados_de_búsqueda/code.html';
+            }
+        });
+    }
+
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.getAttribute('data-tab');
+            
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active', 'border-primary', 'text-primary');
+                btn.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            });
+            
+            button.classList.add('active', 'border-primary', 'text-primary');
+            button.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById('tab-' + targetTab).classList.remove('hidden');
+        });
+    });
+</script>
+
+<!-- Scripts de utilidades del sistema -->
+<script src="../js/toast.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/download-manager.js"></script>
+<script src="../js/header-sync.js"></script>
+
+<!-- Sistema Premium -->
+<script src="../js/premium-check.js"></script>
+
+</body></html>

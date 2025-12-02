@@ -1,0 +1,42 @@
+/* Fix para móviles */
+@media (max-width: 640px) {
+  /* Forzar zoom móvil */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  /* Header responsivo */
+  header {
+    padding: 0.75rem 1rem !important;
+    flex-wrap: wrap;
+  }
+  
+  /* Navegación móvil */
+  nav {
+    display: none !important;
+  }
+  
+  /* Botones más grandes para táctil */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Texto más legible */
+  body {
+    font-size: 16px !important;
+  }
+  
+  /* Filtros scroll horizontal */
+  .filter-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Cards más pequeñas */
+  .material-card {
+    margin-bottom: 1rem;
+  }
+}
